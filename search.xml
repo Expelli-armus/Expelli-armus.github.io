@@ -20,4 +20,78 @@
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>00x1位运算</title>
+    <url>/2023/08/03/00x1%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="00x1-位运算"><a href="#00x1-位运算" class="headerlink" title="00x1 位运算"></a>00x1 位运算</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">与</th>
+<th style="text-align:center">或</th>
+<th style="text-align:center">非</th>
+<th style="text-align:center">异或</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center">\</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">~</td>
+<td>xor</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="移位运算"><a href="#移位运算" class="headerlink" title="移位运算"></a>移位运算</h3><p>左移:1&lt;&lt;n, n&lt;&lt;1</p>
+<p>算数右移:向下取整（-3）&gt;&gt;1=-2, 3&gt;&gt;1=1</p>
+<p>而整数/2在c++中实现“除以二向0取整”，即先取整再添加符号</p>
+<h2 id="移位运算-1"><a href="#移位运算-1" class="headerlink" title="移位运算"></a>移位运算</h2><h3 id="64位整数乘法"><a href="#64位整数乘法" class="headerlink" title="64位整数乘法"></a>64位整数乘法</h3><p>求$a*b mod p$的值，其中$1\le a,b,p\le 10^{18}$。</p>
+<h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p>类似快速幂的思想</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ll <span class="title">mul</span><span class="params">(ll a,ll b,ll p)</span></span>&#123;</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;b;b&gt;&gt;<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(b&amp;<span class="number">1</span>)ans=(ans+a)%p;<span class="comment">//个位是奇数就直接加a</span></span><br><span class="line">		a=a*<span class="number">2</span>%p;<span class="comment">//将b的阶数转移到a上</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p>利用$a<em>b mod p=a</em>b-\lfloor a<em>b/p\rfloor </em>p$(带余除法)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ll <span class="title">mul</span><span class="params">(ll a,ll b,ll c)</span></span>&#123;</span><br><span class="line">	a%=p;b%=p;</span><br><span class="line">    ll c=(ld)a*b/p;</span><br><span class="line">    ll ans=a*b-c*p;</span><br><span class="line">    <span class="keyword">if</span>(ans&lt;<span class="number">0</span>)ans+=p;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(ans&gt;=p)ans-=p;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二进制状态压缩"><a href="#二进制状态压缩" class="headerlink" title="二进制状态压缩"></a>二进制状态压缩</h2><p>将一个长为m的bool数组用一个m位二进制整数表示并存储的办法。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>运算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>取第k位</td>
+<td>(n&gt;&gt;k)&amp;1</td>
+</tr>
+<tr>
+<td>取0~k-1位（即后k位）</td>
+<td>n&amp;(1&lt;&lt;k-1)</td>
+</tr>
+<tr>
+<td>第k位取反</td>
+<td>n xor 1&lt;&lt;k</td>
+</tr>
+<tr>
+<td>第k位赋值为1</td>
+<td>n\</td>
+<td>(1&lt;&lt;k)</td>
+</tr>
+<tr>
+<td>第k位赋值为0</td>
+<td>n&amp;(~(1&lt;&lt;k))</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="最短Hamilton路径"><a href="#最短Hamilton路径" class="headerlink" title="最短Hamilton路径"></a>最短Hamilton路径</h3><p>给定一张n($n\le 20$)个点的带权无向图，点从0~n-1标号，求起点0到终点n-1的最短Hamilton路径(从0到n-1经过每个点恰一次)。</p>
+<p>很容易想到本题的一种“朴素”做法，即穷举，时间复杂度O(n<em>n!),利用二进制状态压缩DP可以优化到$O(n^2 </em>2^n)$。</p>
+<p>用一个n位二进制数表示点的经过状态。用F[i,j]表示点的经过状态为i，且目前处于点j的最短路径</p>
+]]></content>
+      <categories>
+        <category>算法竞赛进阶指南</category>
+      </categories>
+  </entry>
 </search>
