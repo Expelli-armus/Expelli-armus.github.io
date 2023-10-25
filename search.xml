@@ -3,8 +3,12 @@
   <entry>
     <title></title>
     <url>/2023/04/08/IF%20ANYTHING%20HAPENS%20I%20LOVE%20YOU/</url>
-    <content><![CDATA[<h1 id="IF-ANYTHING-HAPENS-I-LOVE-YOU"><a href="#IF-ANYTHING-HAPENS-I-LOVE-YOU" class="headerlink" title="IF ANYTHING HAPENS I LOVE YOU"></a>IF ANYTHING HAPENS I LOVE YOU</h1><p>真相，还是交给你自己去看。 谁也无法彻底走进别人的悲痛。 大多数时候，我们的感动和醒悟，都只是匆忙地掠过别人的一生。 但就是一眼。 也足以成为，彼此留存一生的信物。</p>
+    <content><![CDATA[<hr>
+<h1 id="IF-ANYTHING-HAPENS-I-LOVE-YOU"><a href="#IF-ANYTHING-HAPENS-I-LOVE-YOU" class="headerlink" title="IF ANYTHING HAPENS I LOVE YOU"></a>IF ANYTHING HAPENS I LOVE YOU</h1><p>真相，还是交给你自己去看。 谁也无法彻底走进别人的悲痛。 大多数时候，我们的感动和醒悟，都只是匆忙地掠过别人的一生。 但就是一眼。 也足以成为，彼此留存一生的信物。</p>
 ]]></content>
+      <categories>
+        <category>小记</category>
+      </categories>
   </entry>
   <entry>
     <title>Hello World</title>
@@ -88,8 +92,9 @@
 </div>
 <h3 id="最短Hamilton路径"><a href="#最短Hamilton路径" class="headerlink" title="最短Hamilton路径"></a>最短Hamilton路径</h3><p>给定一张n($n\le 20$)个点的带权无向图，点从0~n-1标号，求起点0到终点n-1的最短Hamilton路径(从0到n-1经过每个点恰一次)。</p>
 <p>很容易想到本题的一种“朴素”做法，即穷举，时间复杂度O(n<em>n!),利用二进制状态压缩DP可以优化到$O(n^2 </em>2^n)$。</p>
-<p>用一个n位二进制数表示点的经过状态。用F[i,j]表示点的经过状态为i，且目前处于点j的最短路径</p>
-]]></content>
+<p>用一个n位二进制数表示点的经过状态。用F[i,j]表示点的经过状态为i，且目前处于点j的最短路径。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> f[<span class="number">1</span>&lt;&lt;<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">hamilton</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> weight[<span class="number">20</span>][<span class="number">20</span>])</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(f,<span class="number">0x3f</span>,<span class="built_in">sizeof</span>(f));</span><br><span class="line">    f[<span class="number">1</span>][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;<span class="number">1</span>&lt;&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;<span class="keyword">if</span>(i&gt;&gt;j&amp;<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;n;k++)&#123;<span class="keyword">if</span>((i^<span class="number">1</span>&lt;&lt;j)&gt;&gt;k&amp;<span class="number">1</span>)</span><br><span class="line">                f[i][j]=<span class="built_in">min</span>(f[i][j],f[i^<span class="number">1</span>&lt;&lt;j][k]+weight[k][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[<span class="number">1</span>&lt;&lt;n<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="例题-起床困难综合症"><a href="#例题-起床困难综合症" class="headerlink" title="[例题]起床困难综合症"></a>[例题]起床困难综合症</h3>]]></content>
       <categories>
         <category>算法竞赛进阶指南</category>
       </categories>
