@@ -104,7 +104,29 @@
     <url>/2023/10/25/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</url>
     <content><![CDATA[<h1 id="计算机系统概述"><a href="#计算机系统概述" class="headerlink" title="计算机系统概述"></a>计算机系统概述</h1>]]></content>
       <categories>
-        <category>算法竞赛进阶指南</category>
+        <category>ICS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JH学习笔记</title>
+    <url>/2023/10/25/JH%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="2-3算法基础"><a href="#2-3算法基础" class="headerlink" title="2.3算法基础"></a>2.3算法基础</h1><h2 id="字母、单词和语言"><a href="#字母、单词和语言" class="headerlink" title="字母、单词和语言"></a>字母、单词和语言</h2><p>所有数据都以符号形式的字符串表示。数据表示的类型通常对算法实现的效率很重要。下面介绍一些形式语言理论的基础。我们不需要过多处理数据表示的细节，因为我们在抽象设计级别上考虑算法，通常不处理实现细节。本节的目标是给出一些定义来确定某些输入数据的表示，从而精确地形式化一些基本算法问题。</p>
+<blockquote>
+<ul>
+<li>任意非空有限集合称为一个字母表。每个字母表$\sum$中的元素称为$\sum$的一个符号。</li>
+<li>$\sum$的符号组成的有限序列称为单词。0个符号组成空单词$\lambda$。</li>
+<li>$\sum$生成的单词构成集合$\sum^*$。</li>
+<li>单词$w$的长度由$|w|$表示。</li>
+<li>对每个$a\in \sum$，$#a(w)$表示$w$中$a$出现的次数。则$|w|=\sum#a(w)$。</li>
+<li>对字母表$\sum$，$\sum^n={x\in\sum||x|=n}$，即长度为n的单词构成的集合。</li>
+<li>定义$\sum^+=\sum^*-{\lambda}$。</li>
+<li>对于字母表$\sum$的两个单词$v,w$，$vw$为它们的连接。有$w^0=\lambda,w^{n+1}=ww^n$。</li>
+<li>如果$w=uzv$,$u$称为$w$的前缀，$v$称为$w$的后缀，$z$称为$w$的子单词。</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>JH</category>
       </categories>
   </entry>
 </search>
