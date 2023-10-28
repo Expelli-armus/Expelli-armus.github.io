@@ -145,7 +145,7 @@ class="math inline">\(|w|\)</span>表示。</li>
 class="math inline">\(\#a(w)\)</span>表示<span
 class="math inline">\(w\)</span>中<span
 class="math inline">\(a\)</span>出现的次数。则<span
-class="math inline">\(|w|=\sum\#a(w)\)</span>。</li>
+class="math display">\[|w|=\sum\#a(w)\]</span>。</li>
 <li>对字母表<span class="math inline">\(\sum\)</span>，<span
 class="math display">\[\sum^n=\{x\in\sum||x|=n\}\]</span>，即长度为n的单词构成的集合。</li>
 <li>定义<span
@@ -153,7 +153,7 @@ class="math display">\[\sum^+=\sum^*-\{\lambda\}\]</span>。</li>
 <li>对于字母表<span class="math inline">\(\sum\)</span>的两个单词<span
 class="math inline">\(v,w\)</span>，<span
 class="math inline">\(vw\)</span>为它们的连接。有<span
-class="math inline">\(w^0=\lambda,w^{n+1}=ww^n\)</span>。</li>
+class="math display">\[w^0=\lambda,w^{n+1}=ww^n\]</span>。</li>
 <li>如果<span class="math inline">\(w=uzv\)</span>,<span
 class="math inline">\(u\)</span>称为<span
 class="math inline">\(w\)</span>的前缀，<span
@@ -202,7 +202,7 @@ class="math inline">\((Prim,\Sigma_{bool})\)</span>问题。这是二进制的�
 class="math display">\[X=\{x_1,x_2,...,x_n\}\]</span>生成的两个多项式<span
 class="math display">\[p_1,p_2\]</span>。</p>
 <p>Output:在<span class="math inline">\(\mathbb{Z}_p\)</span>上<span
-class="math inline">\(p_1\equiv p_2\)</span>则输出1，否则输出0。</p>
+class="math display">\[p_1\equiv p_2\]</span>则输出1，否则输出0。</p>
 </blockquote>
 <h5 id="eq-1bp">EQ-1BP</h5>
 <p>对两个给定的一次性分支程序，两者是否表示相同的布尔函数。</p>
@@ -240,9 +240,9 @@ class="math inline">\(K_k\)</span>为1，否则为0。</p>
 <p><span class="math inline">\(AX=b\)</span>是否有解的问题。</p>
 <p>直接给出最终版本：有限域上的线性规划整数解。</p>
 <p><span class="math display">\[(Sol-IP_p,\{0,1,...,p-1,\# \}
-)\]</span>$问题。</p>
+)\]</span>问题。</p>
 <p><span class="math display">\[Sol-IP_p=\{
-&lt;A,b&gt;\in\{0,1,...,p-1,\# \} | \exist X,s.t. AX=b,其中
+&lt;A,b&gt;\in\{0,1,...,p-1,\# \} | \exist X,s.t. AX=b,\\其中
 A是\mathbb{Z}_p上的m\times n矩阵,m、n为正整数，b\in
 (\mathbb{Z}_p)^m，X\in (\mathbb{Z}_p)^n. \}\]</span></p>
 <h3 id="优化问题">优化问题</h3>
