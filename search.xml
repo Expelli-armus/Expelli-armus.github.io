@@ -126,60 +126,127 @@
   <entry>
     <title>JH学习笔记</title>
     <url>/2023/10/25/JH%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="2-3算法基础"><a href="#2-3算法基础" class="headerlink" title="2.3算法基础"></a>2.3算法基础</h1><h2 id="字母、单词和语言"><a href="#字母、单词和语言" class="headerlink" title="字母、单词和语言"></a>字母、单词和语言</h2><p>所有数据都以符号形式的字符串表示。数据表示的类型通常对算法实现的效率很重要。下面介绍一些形式语言理论的基础。我们不需要过多处理数据表示的细节，因为我们在抽象设计级别上考虑算法，通常不处理实现细节。本节的目标是给出一些定义来确定某些输入数据的表示，从而精确地形式化一些基本算法问题。</p>
+    <content><![CDATA[<h1 id="算法基础">2.3算法基础</h1>
+<h2 id="字母单词和语言">字母、单词和语言</h2>
+<p>所有数据都以符号形式的字符串表示。数据表示的类型通常对算法实现的效率很重要。下面介绍一些形式语言理论的基础。我们不需要过多处理数据表示的细节，因为我们在抽象设计级别上考虑算法，通常不处理实现细节。本节的目标是给出一些定义来确定某些输入数据的表示，从而精确地形式化一些基本算法问题。</p>
 <blockquote>
 <ul>
-<li>任意非空有限集合称为一个字母表。每个字母表$\sum$中的元素称为$\sum$的一个符号。</li>
-<li>$\sum$的符号组成的有限序列称为单词。0个符号组成空单词$\lambda$。</li>
-<li>$\sum$生成的单词构成集合$\sum^*$。</li>
-<li>单词$w$的长度由$|w|$表示。</li>
-<li>对每个$a\in \sum$，$#a(w)$表示$w$中$a$出现的次数。则$|w|=\sum#a(w)$。</li>
-<li>对字母表$\sum$，$\sum^n={x\in\sum||x|=n}$，即长度为n的单词构成的集合。</li>
-<li>定义$\sum^+=\sum^*-{\lambda}$。</li>
-<li>对于字母表$\sum$的两个单词$v,w$，$vw$为它们的连接。有$w^0=\lambda,w^{n+1}=ww^n$。</li>
-<li>如果$w=uzv$,$u$称为$w$的前缀，$v$称为$w$的后缀，$z$称为$w$的子单词。</li>
-<li>对字母表$\sum$，对$L\sub \sum^*$，称$L$是$\sum$的语言。$L^c$称为$\sum$下语言$L$的补。</li>
-<li>$L_1L_2={uv|u\in L_1,v\in L_2}$称为语言的链接。</li>
-<li>给出$\sum={s_1,s_2,…,s_m},s_1&lt;s_2&lt;…&lt;s_m$，则可给出单词的规范排序。先按长度排，长度相同的按照字母的大小排。</li>
+<li>任意非空有限集合称为一个字母表。每个字母表<span
+class="math inline">\(\sum\)</span>中的元素称为<span
+class="math inline">\(\sum\)</span>的一个符号。</li>
+<li><span
+class="math inline">\(\sum\)</span>的符号组成的有限序列称为单词。0个符号组成空单词<span
+class="math inline">\(\lambda\)</span>。</li>
+<li><span class="math inline">\(\sum\)</span>生成的单词构成集合<span
+class="math inline">\(\sum^*\)</span>。</li>
+<li>单词<span class="math inline">\(w\)</span>的长度由<span
+class="math inline">\(|w|\)</span>表示。</li>
+<li>对每个<span class="math inline">\(a\in \sum\)</span>，<span
+class="math inline">\(\#a(w)\)</span>表示<span
+class="math inline">\(w\)</span>中<span
+class="math inline">\(a\)</span>出现的次数。则<span
+class="math inline">\(|w|=\sum\#a(w)\)</span>。</li>
+<li>对字母表<span class="math inline">\(\sum\)</span>，<span
+class="math inline">\(\sum^n=\{x\in\sum||x|=n\}\)</span>，即长度为n的单词构成的集合。</li>
+<li>定义<span
+class="math inline">\(\sum^+=\sum^*-\{\lambda\}\)</span>。</li>
+<li>对于字母表<span class="math inline">\(\sum\)</span>的两个单词<span
+class="math inline">\(v,w\)</span>，<span
+class="math inline">\(vw\)</span>为它们的连接。有<span
+class="math inline">\(w^0=\lambda,w^{n+1}=ww^n\)</span>。</li>
+<li>如果<span class="math inline">\(w=uzv\)</span>,<span
+class="math inline">\(u\)</span>称为<span
+class="math inline">\(w\)</span>的前缀，<span
+class="math inline">\(v\)</span>称为<span
+class="math inline">\(w\)</span>的后缀，<span
+class="math inline">\(z\)</span>称为<span
+class="math inline">\(w\)</span>的子单词。</li>
+<li>对字母表<span class="math inline">\(\sum\)</span>，对<span
+class="math inline">\(L\subset \sum^*\)</span>，称<span
+class="math inline">\(L\)</span>是<span
+class="math inline">\(\sum\)</span>的语言。<span
+class="math inline">\(L^c\)</span>称为<span
+class="math inline">\(\sum\)</span>下语言<span
+class="math inline">\(L\)</span>的补。</li>
+<li><span class="math inline">\(L_1L_2=\{uv|u\in L_1,v\in
+L_2\}\)</span>称为语言的链接。</li>
+<li>给出<span
+class="math inline">\(\sum=\{s_1,s_2,...,s_m\},s_1&lt;s_2&lt;...&lt;s_m\)</span>，则可给出单词的规范排序。先按长度排，长度相同的按照字母的大小排。</li>
 </ul>
 </blockquote>
-<h2 id="算法问题"><a href="#算法问题" class="headerlink" title="算法问题"></a>算法问题</h2><p>每个算法都可以看做字母表与字母表的映射。我们从决策问题开始，如果$A$是算法，$x$是输入，则$A(x)$表示输出。</p>
-<h3 id="L-U-Sigma-问题"><a href="#L-U-Sigma-问题" class="headerlink" title="$L,U,\Sigma$问题"></a>$L,U,\Sigma$问题</h3><blockquote>
-<p>决策问题：三元组$(L,U,\Sigma)$确定的$U\rightarrow {0,1}$的函数。其中$L\sub U\sub \Sigma^*$。</p>
-<p>Input:$x\in U$.</p>
-<p>Output:$1,x\in L;0,x\notin L.$</p>
-<p>在很多问题中$U=\Sigma$，此时表示为$(L,\Sigma)$问题。</p>
-</blockquote>
-<h4 id="素数测试"><a href="#素数测试" class="headerlink" title="素数测试"></a>素数测试</h4><p>$(Prim,\Sigma_{bool})$问题。这是二进制的素数检测，可以通过改变字母表得到k进制的素数检测。</p>
-<h4 id="判断相等"><a href="#判断相等" class="headerlink" title="判断相等"></a>判断相等</h4><h5 id="EQ-POL"><a href="#EQ-POL" class="headerlink" title="EQ-POL"></a>EQ-POL</h5><blockquote>
-<p>Input:素数p，由$X={x_1,x_2,…,x_n}$生成的两个多项式$p_1,p_2$。</p>
-<p>Output:在$\mathbb{Z}_p$上$p_1\equiv p_2$则输出1，否则输出0。</p>
-</blockquote>
-<h5 id="EQ-1BP"><a href="#EQ-1BP" class="headerlink" title="EQ-1BP"></a>EQ-1BP</h5><p>对两个给定的一次性分支程序，两者是否表示相同的布尔函数。</p>
+<h2 id="算法问题">算法问题</h2>
+<p>每个算法都可以看做字母表与字母表的映射。我们从决策问题开始，如果<span
+class="math inline">\(A\)</span>是算法，<span
+class="math inline">\(x\)</span>是输入，则<span
+class="math inline">\(A(x)\)</span>表示输出。</p>
+<h3 id="lusigma问题"><span
+class="math inline">\(L,U,\Sigma\)</span>问题</h3>
 <blockquote>
-<p>Input:由布尔变量$X={x_1,x_2,…,x_n}$给出的布尔函数$B_1,B_2$。</p>
+<p>决策问题：三元组<span
+class="math inline">\((L,U,\Sigma)\)</span>确定的<span
+class="math inline">\(U\rightarrow \{0,1\}\)</span>的函数。其中<span
+class="math inline">\(L\subset U\subset \Sigma^*\)</span>。</p>
+<p>Input:<span class="math inline">\(x\in U\)</span>.</p>
+<p>Output:<span class="math inline">\(1,x\in L;0,x\notin L.\)</span></p>
+<p>在很多问题中<span
+class="math inline">\(U=\Sigma\)</span>，此时表示为<span
+class="math inline">\((L,\Sigma)\)</span>问题。</p>
+</blockquote>
+<h4 id="素数测试">素数测试</h4>
+<p><span
+class="math inline">\((Prim,\Sigma_{bool})\)</span>问题。这是二进制的素数检测，可以通过改变字母表得到k进制的素数检测。</p>
+<h4 id="判断相等">判断相等</h4>
+<h5 id="eq-pol">EQ-POL</h5>
+<blockquote>
+<p>Input:素数p，由<span
+class="math inline">\(X=\{x_1,x_2,...,x_n\}\)</span>生成的两个多项式<span
+class="math inline">\(p_1,p_2\)</span>。</p>
+<p>Output:在<span class="math inline">\(\mathbb{Z}_p\)</span>上<span
+class="math inline">\(p_1\equiv p_2\)</span>则输出1，否则输出0。</p>
+</blockquote>
+<h5 id="eq-1bp">EQ-1BP</h5>
+<p>对两个给定的一次性分支程序，两者是否表示相同的布尔函数。</p>
+<blockquote>
+<p>Input:由布尔变量<span
+class="math inline">\(X=\{x_1,x_2,...,x_n\}\)</span>给出的布尔函数<span
+class="math inline">\(B_1,B_2\)</span>。</p>
 <p>Output:相等为1，不等为0。</p>
 </blockquote>
-<h4 id="可满足性"><a href="#可满足性" class="headerlink" title="可满足性"></a>可满足性</h4><p><a href="https://zhuanlan.zhihu.com/p/432853785">SAT问题简介 - 知乎 (zhihu.com)</a></p>
+<h4 id="可满足性">可满足性</h4>
+<p><a href="https://zhuanlan.zhihu.com/p/432853785">SAT问题简介 - 知乎
+(zhihu.com)</a></p>
 <p>设k为一个SAT问题中所有子句的长度上限，称以k为子句长度上限构成的SAT问题为k-SAT问题。</p>
-<h4 id="分团问题"><a href="#分团问题" class="headerlink" title="分团问题"></a>分团问题</h4><blockquote>
+<h4 id="分团问题">分团问题</h4>
+<blockquote>
 <p>Input: k,G。</p>
-<p>Output: G中有$K_k$为1，否则为0。</p>
+<p>Output: G中有<span
+class="math inline">\(K_k\)</span>为1，否则为0。</p>
 </blockquote>
-<h3 id="顶点覆盖问题-VCP"><a href="#顶点覆盖问题-VCP" class="headerlink" title="顶点覆盖问题(VCP)"></a>顶点覆盖问题(VCP)</h3><blockquote>
+<h3 id="顶点覆盖问题vcp">顶点覆盖问题(VCP)</h3>
+<blockquote>
 <p><strong>顶点覆盖 (Vertex Cover):</strong></p>
 <p>给定一个无向图G，找到无向图G的点集子集V，使得无向图G中的任何一条边，都与点集子集V的至少一个节点是接触的。</p>
-<p><strong>顶点覆盖问题:</strong> 查看无向图G中是否包含一个大小为k满足上述要求的点集子集V。</p>
+<p><strong>顶点覆盖问题:</strong>
+查看无向图G中是否包含一个大小为k满足上述要求的点集子集V。</p>
 </blockquote>
-<p>$(VCP,{0,1,# })$问题。</p>
-<p>$VCP={u#w\in{0,1,# }^+|u\in {0,1}^+且w为一张图存在大小为Number(u)的顶点覆盖 }$。</p>
-<h3 id="哈密顿回路"><a href="#哈密顿回路" class="headerlink" title="哈密顿回路"></a>哈密顿回路</h3><p>$(HC,{0,1,# })$问题。</p>
-<p>$HC={ w\in{0,1,# }^*|w代表一张有哈密顿回路的图 }$。</p>
-<h4 id="线性规划解的存在性"><a href="#线性规划解的存在性" class="headerlink" title="线性规划解的存在性"></a>线性规划解的存在性</h4><p>$AX=b$是否有解的问题。</p>
+<p><span class="math inline">\((VCP,\{0,1,\# \})\)</span>问题。</p>
+<p><span class="math inline">\(VCP=\{u\#w\in\{0,1,\# \}^+|u\in
+\{0,1\}^+且w为一张图存在大小为Number(u)的顶点覆盖 \}\)</span>。</p>
+<p>###哈密顿回路</p>
+<p><span class="math inline">\((HC,\{0,1,\# \})\)</span>问题。</p>
+<p><span class="math inline">\(HC=\{ w\in\{0,1,\#
+\}^*|w代表一张有哈密顿回路的图 \}\)</span>。</p>
+<h4 id="线性规划解的存在性">线性规划解的存在性</h4>
+<p><span class="math inline">\(AX=b\)</span>是否有解的问题。</p>
 <p>直接给出最终版本：有限域上的线性规划整数解。</p>
-<p>$(Sol-IP_p,{0,1,…,p-1,# } )$问题。</p>
-<p>$Sol-IP_p={ <A,b>\in{0,1,…,p-1,# }|\exist X,s.t. AX=b,其中 A是\mathbb{Z}_p上的m\times n矩阵,m、n为正整数，b\in (\mathbb{Z}_p)^m，X\in (\mathbb{Z}_p)^n. }$</p>
-<h3 id="优化问题"><a href="#优化问题" class="headerlink" title="优化问题"></a>优化问题</h3>]]></content>
+<p><span class="math inline">\((Sol-IP_p,\{0,1,...,p-1,\# \}
+)\)</span>问题。</p>
+<p><span class="math inline">\(Sol-IP_p=\{
+&lt;A,b&gt;\in\{0,1,...,p-1,\# \}|\exist X,s.t. AX=b,其中
+A是\mathbb{Z}_p上的m\times n矩阵,m、n为正整数，b\in
+(\mathbb{Z}_p)^m，X\in (\mathbb{Z}_p)^n. \}\)</span></p>
+<h3 id="优化问题">优化问题</h3>
+]]></content>
       <categories>
         <category>JH</category>
       </categories>
