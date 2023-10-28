@@ -242,7 +242,7 @@ class="math inline">\(K_k\)</span>为1，否则为0。</p>
 <p><span class="math inline">\((Sol-IP_p,\{0,1,...,p-1,\# \}
 )\)</span>问题。</p>
 <p><span class="math inline">\(Sol-IP_p=\{
-&lt;A,b&gt;\in\{0,1,...,p-1,\# \}|\exist X,s.t. AX=b,其中
+&lt;A,b&gt;\in\{0,1,...,p-1,\# \} | \exist X,s.t. AX=b,其中
 A是\mathbb{Z}_p上的m\times n矩阵,m、n为正整数，b\in
 (\mathbb{Z}_p)^m，X\in (\mathbb{Z}_p)^n. \}\)</span></p>
 <h3 id="优化问题">优化问题</h3>
