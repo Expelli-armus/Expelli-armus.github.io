@@ -126,7 +126,7 @@
   <entry>
     <title>JH学习笔记</title>
     <url>/2023/10/25/JH%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h1 id="算法基础">2.3算法基础</h1>
+    <content><![CDATA[<h1 id="算法基础">2.3 算法基础</h1>
 <h2 id="字母单词和语言">字母、单词和语言</h2>
 <p>所有数据都以符号形式的字符串表示。数据表示的类型通常对算法实现的效率很重要。下面介绍一些形式语言理论的基础。我们不需要过多处理数据表示的细节，因为我们在抽象设计级别上考虑算法，通常不处理实现细节。本节的目标是给出一些定义来确定某些输入数据的表示，从而精确地形式化一些基本算法问题。</p>
 <blockquote>
@@ -232,7 +232,7 @@ class="math inline">\(K_k\)</span>为1，否则为0。</p>
 <p><span class="math inline">\((VCP,\{0,1,\# \})\)</span>问题。</p>
 <p><span class="math display">\[VCP=\{u\#w\in\{0,1,\# \}^+|u\in
 \{0,1\}^+且w为一张图存在大小为Number(u)的顶点覆盖 \}\]</span>。</p>
-<p>###哈密顿回路</p>
+<h3 id="哈密顿回路">哈密顿回路</h3>
 <p><span class="math inline">\((HC,\{0,1,\# \})\)</span>问题。</p>
 <p><span class="math display">\[HC=\{ w\in\{0,1,\#
 \}^*|w代表一张有哈密顿回路的图 \}\]</span>。</p>
@@ -245,10 +245,29 @@ class="math inline">\(K_k\)</span>为1，否则为0。</p>
 &lt;A,b&gt;\in\{0,1,...,p-1,\# \} | \exist X,s.t. AX=b,\\其中
 A是\mathbb{Z}_p上的m\times n矩阵,m、n为正整数，b\in
 (\mathbb{Z}_p)^m，X\in (\mathbb{Z}_p)^n. \}\]</span></p>
-<h3 id="优化问题">优化问题</h3>
+<h1 id="分支界定">3.4 分支界定</h1>
+<p><a
+href="https://www.jianshu.com/p/c738c8262087">分支限界法——对解空间的一种策略搜索（广度优先搜索）
+- 简书 (jianshu.com)</a></p>
+<p>求解一个约束条件较多的问题A,可以暂缓考虑部分条件，变换成问题B,先求B的最优解（解松弛问题）。B的最优解一定比
+A的好（或相当）。再将原来暂缓考虑的部分条件逐步插入问题B中，得到B的若干子问题，称为<strong>分枝</strong>。求解这些子问题，淘汰较差的解，直到所有暂缓考虑的部分条件全部插入为止。这时求得的最优解就是问题A的最优解。</p>
 ]]></content>
       <categories>
         <category>JH</category>
       </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/11/15/%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<h2 id="算法">算法</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/105467597">算法学习笔记（目录）
+- 知乎 (zhihu.com)</a></p>
+<h2 id="物理">物理</h2>
+<p><a
+href="https://zhuanlan.zhihu.com/p/452443183">大物（下）-电磁学例题笔记
+- 知乎 (zhihu.com)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/168770929">大学物理复习：电磁学
+- 知乎 (zhihu.com)</a></p>
+]]></content>
   </entry>
 </search>
