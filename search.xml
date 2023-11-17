@@ -259,7 +259,8 @@ A的好（或相当）。再将原来暂缓考虑的部分条件逐步插入问�
   <entry>
     <title></title>
     <url>/2023/11/15/%E9%93%BE%E6%8E%A5/</url>
-    <content><![CDATA[<h2 id="算法">算法</h2>
+    <content><![CDATA[<hr />
+<h2 id="算法">算法</h2>
 <p><a href="https://zhuanlan.zhihu.com/p/105467597">算法学习笔记（目录）
 - 知乎 (zhihu.com)</a></p>
 <h2 id="物理">物理</h2>
@@ -269,11 +270,20 @@ href="https://zhuanlan.zhihu.com/p/452443183">大物（下）-电磁学例题笔
 <p><a href="https://zhuanlan.zhihu.com/p/168770929">大学物理复习：电磁学
 - 知乎 (zhihu.com)</a></p>
 ]]></content>
+      <categories>
+        <category>链接</category>
+      </categories>
   </entry>
   <entry>
     <title></title>
     <url>/2023/09/29/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab2%20%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%AE%9E%E9%AA%8C/</url>
-    <content><![CDATA[<h1 id="lab2-时序逻辑电路实验">Lab2 时序逻辑电路实验</h1>
+    <content><![CDATA[<p>tags: []</p>
+<p>title: test</p>
+<p>categories:</p>
+<ul>
+<li>数电实验</li>
+</ul>
+<h1 id="lab2-时序逻辑电路实验">Lab2 时序逻辑电路实验</h1>
 <blockquote>
 <p><strong>221240083 陈正佺</strong></p>
 </blockquote>
@@ -363,7 +373,7 @@ class="math inline">\(32*32*4=4096\)</span>。</p>
 ]]></content>
   </entry>
   <entry>
-    <title></title>
+    <title>test</title>
     <url>/2023/09/12/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab1%204%E8%B7%AF3%E4%BD%8D%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="lab1组合逻辑电路实验">Lab1：组合逻辑电路实验</h1>
 <h4 id="陈正佺">221240083 陈正佺</h4>
@@ -483,9 +493,12 @@ S[4]=DU[8]\bigoplus DU[9]\bigoplus DU[10]\bigoplus DU[11]\bigoplus
 DU[12]
 \]</span> 据此编辑设计代码即可。</p>
 ]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>test</title>
     <url>/2023/10/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab5%20%E9%94%AE%E7%9B%98%E9%BC%A0%E6%A0%87%E6%8E%A5%E5%8F%A3%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="键盘鼠标接口实验">键盘鼠标接口实验</h1>
 <blockquote>
@@ -538,9 +551,12 @@ DU[12]
 <p>键盘的键位冲突是指在同时按下多个键盘键时，键盘无法正确识别所按下的每个键，导致输入错误或无响应。键盘的硬件原理是通过一个扫描矩阵来检测按键的，而所谓的键位冲突是某些按键由于物理布局的关系会被判定为同时按下。</p>
 <p>可以采用更换高级键盘的方式解决问题。一些高端键盘提供宏功能，可以将多个按键组合预设为一个宏，并通过单个按键触发。这样可以避免同时按下多个按键的问题。</p>
 ]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>test</title>
     <url>/2023/10/20/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab4%20%E4%B9%98%E9%99%A4%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="乘除法器实验">乘除法器实验</h1>
 <ul>
@@ -665,9 +681,12 @@ alt="image-20231020105730117" />
 </ol>
 </blockquote>
 ]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>test</title>
     <url>/2023/10/12/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab3%20%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="算术逻辑部件实验">算术逻辑部件实验</h1>
 <h2 id="带标志位的加减运算部件">带标志位的加减运算部件</h2>
@@ -733,9 +752,12 @@ alt="img" />
 <p>一般来说，对基本的选择进位加法器进行合理的分段可以有效地降低延迟。例如，在最低两位(第0和第1位)采用基本的行波进位加法器，第2位和第3位再使用进位选择加法器。</p></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>test</title>
     <url>/2023/11/09/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab6%20VGA%E6%8E%A5%E5%8F%A3%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="vga接口实验">VGA接口实验</h1>
 <blockquote>
@@ -865,11 +887,15 @@ A），这样可以避免任何潜在的timing loop问题。</p>
 <p>实现字符需要8*16的像素块，实现汉字也是同理，只不过是换成了16*16的字块。对于每个字都是在16*16的范围内让一些像素呈白色，一些呈黑色。类似字库文件进行读入即可。</p>
 <p>这样就做到了在屏幕上显示字库文件，但并不能与键盘进行交互(可能需要输入法的支持什么的)。</p>
 ]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>test</title>
     <url>/2023/11/15/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab7%20%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB%E5%AE%9E%E9%AA%8C/</url>
-    <content><![CDATA[<h1 id="存储器体系实验">存储器体系实验</h1>
+    <content><![CDATA[<hr />
+<h1 id="存储器体系实验">存储器体系实验</h1>
 <ul>
 <li><code>221240083 陈正佺 匡亚明学院</code></li>
 </ul>
@@ -997,5 +1023,8 @@ Cache的关联度指的是某一组相邻地址映射到Cache的相同组。关�
 </ol>
 <p>通过在状态之间进行转换，Cache能够根据CPU的访问请求进行相应的操作，从而提供数据的快速访问，以提高命中率和整体性能。</p>
 ]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
   </entry>
 </search>
