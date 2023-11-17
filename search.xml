@@ -278,7 +278,7 @@ href="https://zhuanlan.zhihu.com/p/452443183">大物（下）-电磁学例题笔
     <title></title>
     <url>/2023/09/29/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab2%20%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<p>tags: []</p>
-<p>title: test</p>
+<p>title: Lab2 时序逻辑电路实验</p>
 <p>categories:</p>
 <ul>
 <li>数电实验</li>
@@ -373,7 +373,7 @@ class="math inline">\(32*32*4=4096\)</span>。</p>
 ]]></content>
   </entry>
   <entry>
-    <title>test</title>
+    <title>Lab1 4路3位数据传输实验</title>
     <url>/2023/09/12/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab1%204%E8%B7%AF3%E4%BD%8D%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="lab1组合逻辑电路实验">Lab1：组合逻辑电路实验</h1>
 <h4 id="陈正佺">221240083 陈正佺</h4>
@@ -498,7 +498,7 @@ DU[12]
       </categories>
   </entry>
   <entry>
-    <title>test</title>
+    <title>Lab5 键盘鼠标接口实验</title>
     <url>/2023/10/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab5%20%E9%94%AE%E7%9B%98%E9%BC%A0%E6%A0%87%E6%8E%A5%E5%8F%A3%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="键盘鼠标接口实验">键盘鼠标接口实验</h1>
 <blockquote>
@@ -556,7 +556,7 @@ DU[12]
       </categories>
   </entry>
   <entry>
-    <title>test</title>
+    <title>Lab4 乘除法器实验</title>
     <url>/2023/10/20/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab4%20%E4%B9%98%E9%99%A4%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="乘除法器实验">乘除法器实验</h1>
 <ul>
@@ -686,7 +686,7 @@ alt="image-20231020105730117" />
       </categories>
   </entry>
   <entry>
-    <title>test</title>
+    <title>Lab3 算术逻辑部件实验</title>
     <url>/2023/10/12/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab3%20%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="算术逻辑部件实验">算术逻辑部件实验</h1>
 <h2 id="带标志位的加减运算部件">带标志位的加减运算部件</h2>
@@ -757,7 +757,7 @@ alt="img" />
       </categories>
   </entry>
   <entry>
-    <title>test</title>
+    <title>Lab6 VGA接口实验</title>
     <url>/2023/11/09/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab6%20VGA%E6%8E%A5%E5%8F%A3%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<h1 id="vga接口实验">VGA接口实验</h1>
 <blockquote>
@@ -892,7 +892,7 @@ A），这样可以避免任何潜在的timing loop问题。</p>
       </categories>
   </entry>
   <entry>
-    <title>test</title>
+    <title>Lab7 存储器体系实验</title>
     <url>/2023/11/15/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab7%20%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB%E5%AE%9E%E9%AA%8C/</url>
     <content><![CDATA[<hr />
 <h1 id="存储器体系实验">存储器体系实验</h1>
