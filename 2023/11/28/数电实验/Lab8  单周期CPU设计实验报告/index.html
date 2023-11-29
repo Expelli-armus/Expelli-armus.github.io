@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>落叶息风 | 落叶息风</title><meta name="author" content="ECHO"><meta name="copyright" content="ECHO"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="tags: [] title: Lab8 单周期CPU设计 categories:  数电实验  单周期CPU设计实验报告   思考题  分析比较运算实用独立比较器件和利用减法运算来实现的区别。  比较运算是计算机中常见的操作，用于判断两个数的大小关系或者判断某些条件是否成立。下面将分析比较运算实用独立比较器件和利用减法运算来实现的区别。  独立比较器件： 独立比较">
+<meta property="og:type" content="article">
+<meta property="og:title" content="落叶息风">
+<meta property="og:url" content="https://expelli-armus.github.io/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:site_name" content="落叶息风">
+<meta property="og:description" content="tags: [] title: Lab8 单周期CPU设计 categories:  数电实验  单周期CPU设计实验报告   思考题  分析比较运算实用独立比较器件和利用减法运算来实现的区别。  比较运算是计算机中常见的操作，用于判断两个数的大小关系或者判断某些条件是否成立。下面将分析比较运算实用独立比较器件和利用减法运算来实现的区别。  独立比较器件： 独立比较">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://expelli-armus.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-11-28T06:30:14.237Z">
+<meta property="article:modified_time" content="2023-11-29T02:14:29.056Z">
+<meta property="article:author" content="ECHO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://expelli-armus.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://expelli-armus.github.io/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '落叶息风',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-29 10:14:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="落叶息风"><span class="site-name">落叶息风</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-11-28T06:30:14.237Z" title="发表于 2023-11-28 14:30:14">2023-11-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-29T02:14:29.056Z" title="更新于 2023-11-29 10:14:29">2023-11-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>tags: []</p>
+<p>title: Lab8 单周期CPU设计</p>
+<p>categories:</p>
+<ul>
+<li>数电实验</li>
+</ul>
+<h1 id="单周期cpu设计实验报告">单周期CPU设计实验报告</h1>
+<h2 id="section"></h2>
+<h2 id="section-1"></h2>
+<h2 id="思考题">思考题</h2>
+<blockquote>
+<p>分析比较运算实用独立比较器件和利用减法运算来实现的区别。</p>
+</blockquote>
+<p>比较运算是计算机中常见的操作，用于判断两个数的大小关系或者判断某些条件是否成立。下面将分析比较运算实用独立比较器件和利用减法运算来实现的区别。</p>
+<ol type="1">
+<li><strong>独立比较器件：</strong>
+独立比较器件是专门用于进行比较运算的硬件组件。它们通常包含多个输入端口和一个输出端口。输入端口接收需要进行比较的数据，输出端口输出比较的结果，通常为高电平表示条件成立，低电平表示条件不成立。独立比较器件具有专门优化的比较电路，能够在一个时钟周期内执行比较运算，并输出结果。</li>
+<li><strong>利用减法运算：</strong>
+利用减法运算来实现比较运算是一种常见的软件方法。比较两个数的大小，可以通过将两个数相减，并观察减法运算的结果来得到比较的结果。如果减法的结果为零，表示两个数相等；如果减法结果为正数，表示被减数大于减数；如果减法结果为负数，表示被减数小于减数。这种方法需要借助于算术逻辑单元（ALU）来进行减法运算，并通过对结果的判断得到比较的结果。</li>
+</ol>
+<p>区别如下：</p>
+<ul>
+<li><strong>硬件复杂度：</strong>
+独立比较器件是专门针对比较运算而设计的硬件组件，其电路结构被专门优化，能够在一个时钟周期内执行比较运算。而利用减法运算来实现比较运算，则需要通过ALU来进行减法运算，会引入更多的硬件逻辑。</li>
+<li><strong>灵活性：</strong>
+独立比较器件在设计上已经固定了比较的方式和输入输出端口，不易改变其功能。而利用减法运算来实现比较运算的方法，可以根据需要自由选择需要进行比较的数，并可以根据减法结果的判断进行后续的处理。</li>
+<li><strong>性能：</strong>
+独立比较器件通常能在一个时钟周期内完成比较运算，具有更高的性能。而利用减法运算来实现比较运算的方法，需要进行减法运算并判断结果，可能需要多个时钟周期才能得到比较的结果，性能上会有一定的影响。</li>
+</ul>
+<p>综上所述，独立比较器件在比较运算中具有简单、快速和高性能的特点，但缺乏灵活性。而利用减法运算来实现比较运算的方法则更加灵活，但可能会带来更多的硬件复杂度和性能消耗。选择使用哪种方法可以根据具体的应用需求和硬件资源来决定。</p>
+<blockquote>
+<p>分析为什么单周期 CPU 中指令存储器的读操作必须是异步读取？</p>
+</blockquote>
+<p>在单周期 CPU
+中，指令存储器的读操作必须是异步读取的原因主要涉及到时序和性能方面的考虑。下面是一些解释：</p>
+<ol type="1">
+<li><strong>单周期 CPU 的时序要求：</strong> 单周期 CPU
+是一种简单的设计，每个指令在执行阶段都需要一个时钟周期。如果指令存储器的读操作是同步的，那么读取指令的过程可能需要多个时钟周期，这会导致指令的执行时间不一致，不符合单周期
+CPU 的设计要求。</li>
+<li><strong>简化设计和控制：</strong>
+异步读取的设计更为简单，不需要严格的时序控制。同步读取需要考虑时钟信号的边沿以及同步时序的一致性，这增加了设计的复杂性。而异步读取不涉及时钟边沿，简化了设计和控制。</li>
+<li><strong>性能优化：</strong>
+异步读取可以更灵活地利用存储器的响应时间。在同步读取中，需要等待时钟信号的边沿来触发读取操作，这可能导致一些时钟周期的浪费。异步读取则可以在存储器准备好数据时立即进行读取，最大程度地利用存储器性能，提高整体性能。</li>
+<li><strong>处理器与存储器速度不匹配：</strong>
+处理器和存储器的速度可能不匹配，异步读取允许存储器以自己的速度响应，而不需要等待固定的时钟信号。这对于处理器和存储器速度差异较大的情况下尤为重要。</li>
+</ol>
+<p>总的来说，异步读取的设计简单、性能灵活，更适合单周期 CPU
+的设计理念。异步读取允许指令存储器根据自身的响应时间提供数据，而不受时钟信号的限制，有利于实现一个简单且高效的单周期
+CPU。</p>
+<blockquote>
+<p>寄存器堆如何实现写后读操作？</p>
+</blockquote>
+<p>寄存器堆实现写后读操作通常涉及两个步骤：写入数据和读取数据。在写后读操作中，写入数据后，需要确保写入的数据已经被稳定保存在寄存器中，然后再进行读取。以下是一般的实现方式：</p>
+<ol type="1">
+<li><strong>写入数据：</strong>
+<ul>
+<li><strong>写入地址和数据：</strong>
+首先，通过控制信号将写入的目标寄存器地址和要写入的数据送入寄存器堆。</li>
+<li><strong>写使能信号：</strong> 同时，通过一个写使能信号（Write
+Enable）来告诉寄存器堆此时需要进行写入操作。</li>
+<li><strong>时钟信号：</strong>
+写操作一般在时钟信号的边沿触发，确保写入操作在时钟周期内完成。</li>
+<li><strong>写入电路：</strong>
+寄存器堆内部有相应的写入电路，根据写入地址和数据进行更新。</li>
+</ul></li>
+<li><strong>读取数据：</strong>
+<ul>
+<li><strong>读取地址：</strong>
+通过控制信号将要读取的寄存器地址送入寄存器堆。</li>
+<li><strong>读使能信号：</strong> 同时，通过一个读使能信号（Read
+Enable）来告诉寄存器堆此时需要进行读取操作。</li>
+<li><strong>时钟信号：</strong> 读操作同样在时钟信号的边沿触发。</li>
+<li><strong>读取电路：</strong>
+寄存器堆内部有相应的读取电路，根据读取地址输出相应的数据。</li>
+</ul></li>
+</ol>
+<p>通过以上步骤，实现了写入和读取的操作。在写后读操作中，由于写操作和读操作是分离的，需要确保写操作在时钟信号的边沿完成，以保证写入的数据已经稳定存储。这样在接下来的读取操作中，可以获取到更新后的数据。</p>
+<p>需要注意的是，写后读操作的实现还可能涉及一些其他的控制逻辑，以确保顺序执行写和读，并避免写和读的冲突。这包括处理写入和读取的时序关系，以及解决可能出现的竞争条件等。</p>
+<blockquote>
+<p>思考如何实现支持 RV32M 指令集的单周期中央处理器？</p>
+</blockquote>
+<p>要实现支持 RV32M
+指令集的单周期中央处理器，需要考虑以下步骤和关键点：</p>
+<ol type="1">
+<li><strong>了解 RV32M 指令集：</strong> RV32M 是 RISC-V
+指令集的一部分，包含乘法（M）和除法（D）指令扩展。这些指令扩展添加了乘法器和除法器操作，如
+<code>MUL</code>, <code>MULH</code>, <code>MULHSU</code>,
+<code>MULHU</code>, <code>DIV</code>, <code>DIVU</code>,
+<code>REM</code>, <code>REMU</code>。</li>
+<li><strong>指令解码：</strong> RV32M
+指令集的指令需要被正确地解码以执行相应的操作。这需要识别不同的指令类型（R、I、U、J、S、B）并提取指令中的不同字段（如操作码、目标寄存器、源寄存器、立即数等）。</li>
+<li><strong>控制信号生成：</strong>
+针对每种指令，需要生成相应的控制信号，以便在单周期CPU中正确执行指令。这些信号用于控制寄存器读写、ALU操作、内存访问等。</li>
+<li><strong>ALU 设计：</strong>
+单周期CPU需要一个算术逻辑单元（ALU）来执行指令中定义的算术和逻辑操作。对于
+RV32M 指令集，ALU 需要支持乘法和除法运算。</li>
+<li><strong>寄存器文件设计：</strong> RV32M
+指令集中的指令需要访问寄存器。设计一个寄存器文件以保存 CPU
+中的寄存器值，并能够读取或写入这些寄存器。</li>
+<li><strong>数据通路设计：</strong>
+按照指令执行的流程，设计数据通路，包括指令存储器、寄存器文件、ALU、数据存储器等组件之间的连接。</li>
+<li><strong>控制单元设计：</strong>
+实现一个控制单元来根据指令类型和操作码生成相应的控制信号，驱动数据通路中各个组件的操作。</li>
+<li><strong>单周期时序：</strong>
+确保所有操作都在一个时钟周期内完成。在单周期CPU中，每条指令的执行都需要一个固定的时钟周期。</li>
+<li><strong>仿真和调试：</strong> 完成 CPU
+设计后，进行仿真和调试以验证其功能和正确性。使用仿真工具和测试程序来验证
+CPU 是否正确执行 RV32M 指令集中的各种指令。</li>
+</ol>
+<p>以上是大致的步骤和关键点，实现一个支持 RV32M 指令集的单周期 CPU
+需要详细的计算机体系结构知识和硬件设计经验。使用硬件描述语言（如 Verilog
+或 VHDL）来描述 CPU
+中的各个组件，并通过仿真和综合工具来验证和实现设计。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://expelli-armus.github.io">ECHO</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://expelli-armus.github.io/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">https://expelli-armus.github.io/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://expelli-armus.github.io" target="_blank">落叶息风</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/11/15/%E9%93%BE%E6%8E%A5/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ECHO</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Expelli-armus" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:echo110326390@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E5%91%A8%E6%9C%9Fcpu%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A"><span class="toc-number">1.</span> <span class="toc-text">单周期CPU设计实验报告</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-number">1.1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section-1"><span class="toc-number">1.2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="无题">无题</a><time datetime="2023-11-28T06:30:14.237Z" title="发表于 2023-11-28 14:30:14">2023-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/15/%E9%93%BE%E6%8E%A5/" title="无题">无题</a><time datetime="2023-11-15T15:43:00.000Z" title="发表于 2023-11-15 23:43:00">2023-11-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/15/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab7%20%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB%E5%AE%9E%E9%AA%8C/" title="Lab7 存储器体系实验">Lab7 存储器体系实验</a><time datetime="2023-11-15T08:27:54.350Z" title="发表于 2023-11-15 16:27:54">2023-11-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/09/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab6%20VGA%E6%8E%A5%E5%8F%A3%E5%AE%9E%E9%AA%8C/" title="Lab6 VGA接口实验">Lab6 VGA接口实验</a><time datetime="2023-11-09T06:44:08.341Z" title="发表于 2023-11-09 14:44:08">2023-11-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab5%20%E9%94%AE%E7%9B%98%E9%BC%A0%E6%A0%87%E6%8E%A5%E5%8F%A3%E5%AE%9E%E9%AA%8C/" title="Lab5 键盘鼠标接口实验">Lab5 键盘鼠标接口实验</a><time datetime="2023-10-28T01:38:21.090Z" title="发表于 2023-10-28 09:38:21">2023-10-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By ECHO</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
