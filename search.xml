@@ -1032,15 +1032,9 @@ Cache的关联度指的是某一组相邻地址映射到Cache的相同组。关�
       </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>Lab8 单周期CPU设计</title>
     <url>/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</url>
-    <content><![CDATA[<p>tags: []</p>
-<p>title: Lab8 单周期CPU设计</p>
-<p>categories:</p>
-<ul>
-<li>数电实验</li>
-</ul>
-<h1 id="单周期cpu设计实验报告">单周期CPU设计实验报告</h1>
+    <content><![CDATA[<h1 id="单周期cpu设计实验报告">单周期CPU设计实验报告</h1>
 <h2 id="section"></h2>
 <h2 id="section-1"></h2>
 <h2 id="思考题">思考题</h2>
@@ -1148,5 +1142,8 @@ CPU 是否正确执行 RV32M 指令集中的各种指令。</li>
 或 VHDL）来描述 CPU
 中的各个组件，并通过仿真和综合工具来验证和实现设计。</p>
 ]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
   </entry>
 </search>
