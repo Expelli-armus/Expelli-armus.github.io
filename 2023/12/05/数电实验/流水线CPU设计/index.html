@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>流水线CPU设计 | 落叶息风</title><meta name="author" content="ECHO"><meta name="copyright" content="ECHO"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="流水线CPU设计 实验整体方案设计  取指 IF (Instruction Fetch)：主要完成从指令存储中读取指令的工作， 并同时计算下一个周期的 PC。 译码 ID (Instruction Decode)：主要完成指令译码、立即数扩展、读取寄存器堆等的操作以及生成控制 信号。 执行 EX (Execution)：主要完成 ALU 运算，判断分支转移指令是否跳转等操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流水线CPU设计">
+<meta property="og:url" content="https://expelli-armus.github.io/2023/12/05/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="落叶息风">
+<meta property="og:description" content="流水线CPU设计 实验整体方案设计  取指 IF (Instruction Fetch)：主要完成从指令存储中读取指令的工作， 并同时计算下一个周期的 PC。 译码 ID (Instruction Decode)：主要完成指令译码、立即数扩展、读取寄存器堆等的操作以及生成控制 信号。 执行 EX (Execution)：主要完成 ALU 运算，判断分支转移指令是否跳转等操作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://expelli-armus.github.io/img/avatar.png">
+<meta property="article:published_time" content="2023-12-05T02:39:31.000Z">
+<meta property="article:modified_time" content="2023-12-05T03:48:27.266Z">
+<meta property="article:author" content="ECHO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://expelli-armus.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://expelli-armus.github.io/2023/12/05/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU%E8%AE%BE%E8%AE%A1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '流水线CPU设计',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-12-05 11:48:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="落叶息风"><span class="site-name">落叶息风</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">流水线CPU设计</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-05T02:39:31.000Z" title="发表于 2023-12-05 10:39:31">2023-12-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-12-05T03:48:27.266Z" title="更新于 2023-12-05 11:48:27">2023-12-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/">数电实验</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="流水线CPU设计"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="流水线cpu设计">流水线CPU设计</h1>
+<h2 id="实验整体方案设计">实验整体方案设计</h2>
+<ul>
+<li>取指 IF (Instruction Fetch)：主要完成从指令存储中读取指令的工作，
+并同时计算下一个周期的 PC。</li>
+<li>译码 ID (Instruction
+Decode)：主要完成指令译码、立即数扩展、读取寄存器堆等的操作以及生成控制
+信号。</li>
+<li>执行 EX (Execution)：主要完成 ALU
+运算，判断分支转移指令是否跳转等操作。</li>
+<li>访存 MEM (Memory access)：主要完成对内存的读写操作。</li>
+<li>写回 WB (Write Back)：主要完成将计算结果写回到寄存器中的操作。</li>
+</ul>
+<p>为了保存指令执行的中间结果，流水段之间有一个流水段寄存器，每个流水段寄存器用来存放从当前流水段传到后面所有流水段的信息。</p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205104441687.png" alt="image-20231205104441687" style="zoom:57%;" /></p>
+<h2 id="子模块设计">子模块设计</h2>
+<h3 id="if">IF</h3>
+<p>IF阶段实现PC更新和取指令。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span>@(*)<span class="keyword">begin</span></span><br><span class="line">       NxtPC=IF_PC+<span class="number">4</span>;</span><br><span class="line">       <span class="keyword">if</span>(reset)<span class="keyword">begin</span></span><br><span class="line">           IF_PC=<span class="number">32&#x27;b0</span>;</span><br><span class="line">       <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">always</span>@(<span class="keyword">negedge</span> clk)<span class="keyword">begin</span></span><br><span class="line">   <span class="keyword">if</span>(!stallIF&amp;&amp;!reset)IF_PC&lt;=PCSrc?Branchtarget:NxtPC;</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   <span class="comment">//上升沿读取指令</span></span><br><span class="line">   <span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">      IF_Instr =ram[IF_PC[<span class="number">15</span>:<span class="number">2</span>]];</span><br><span class="line">   <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="id">ID</h3>
+<p>ID阶段进行译码，产生控制信号，进行立即数扩展等，直接引用lab8中使用的代码即可。</p>
+<h3 id="ex">EX</h3>
+<p>EX阶段，利用ALU部件计算数据存储器的地址、数据，以及跳转地址。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">assign</span> flushIF=(PCSrc)?<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">assign</span> flushID=(PCSrc)?<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">wire</span> zero;<span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>]dataa;<span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>]datab;</span><br><span class="line">    <span class="keyword">assign</span> dataa=(IDEX_ALUASrc)?IDEX_PC:IDEX_rs1_data;</span><br><span class="line">    <span class="keyword">assign</span> datab=(IDEX_ALUBSrc[<span class="number">1</span>])?IDEX_imm:(IDEX_ALUBSrc[<span class="number">0</span>]?<span class="number">32&#x27;d4</span>:IDEX_rs2_data);</span><br><span class="line">    ALU32 EX_ALU32(<span class="variable">.result</span>(EX_ALUResult),<span class="variable">.zero</span>(zero),<span class="variable">.dataa</span>(dataa),<span class="variable">.datab</span>(datab),<span class="variable">.aluctr</span>(IDEX_ALUctr));</span><br><span class="line"><span class="comment">//控制冒险，跳转    </span></span><br><span class="line">    <span class="keyword">wire</span> NxtASrc;<span class="keyword">wire</span> NxtBSrc;</span><br><span class="line">    BranchControl EX_BranchControl(<span class="variable">.zero</span>(zero),<span class="variable">.result0</span>(EX_ALUResult[<span class="number">0</span>]),<span class="variable">.Branch</span>(IDEX_Branch),<span class="variable">.NxtASrc</span>(NxtASrc),<span class="variable">.NxtBSrc</span>(NxtBSrc));</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>] NxtA;</span><br><span class="line">    <span class="keyword">assign</span> NxtA = NxtASrc ? IDEX_rs1_data:IDEX_PC;</span><br><span class="line">    <span class="keyword">always</span>@(*)<span class="keyword">begin</span></span><br><span class="line">        Branchtarget=(reset)?<span class="number">32&#x27;b0</span>:(NxtA+IDEX_imm); </span><br><span class="line">        PCSrc=(reset)?<span class="number">1&#x27;b0</span>:NxtBSrc;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="comment">//数据存储要用的    </span></span><br></pre></td></tr></table></figure>
+<h3 id="mem">MEM</h3>
+<p>MEM阶段对数据存储进行读写，与单周期类似，直接调用Datamem即可。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DataMem MEM_DataMem(</span><br><span class="line">    <span class="variable">.dataout</span>(MEM_Out),<span class="variable">.clk</span>(clk),</span><br><span class="line">    <span class="variable">.we</span>(EXMEM_MemWr),<span class="variable">.MemOp</span>(EXMEM_MemOp),</span><br><span class="line">    <span class="variable">.datain</span>(EXMEM_in[<span class="number">15</span>:<span class="number">0</span>]),<span class="variable">.addr</span>(EXMEM_ALUResult)</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<h3 id="wb">WB</h3>
+<p>WB负责将最终运算结果写回到目的寄存器。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> busw=(MEMWB_MemtoReg)?MEMWB_Out:MEMWB_ALUResult;</span><br></pre></td></tr></table></figure>
+<h3 id="流水段寄存器">流水段寄存器</h3>
+<p>为了进行冒险处理，流水段寄存器在相邻两段之间传送数据，并把各段的处理工作相互隔离，实现暂存中间数据的功能。</p>
+<p>当流水线中某个阶段暂时无法执行时，该阶段前面的所有流水段都
+应该停下来等待其执行完毕再继续执行。暂停流水段的执行通常可以通过保持流水段前的段寄存器不变来实现。</p>
+<p>如IF/ID段寄存器：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">negedge</span> clk)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(!stallID)IFID_PC&lt;=(flushIF)?<span class="number">0</span>:IF_PC;</span><br><span class="line">    <span class="keyword">if</span>(!stallID)IFID_Instr&lt;=(flushIF)?<span class="number">0</span>:IF_Instr;</span><br><span class="line">    <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="冒险处理">冒险处理</h3>
+<h4 id="结构冒险">结构冒险</h4>
+<p>利用5段流水线，通过插入空流水段，使得每个阶段的硬件资源都只有一个指令在使用（在顶层链接各个模块即可）。</p>
+<p>在寄存器堆中读
+写操作分时序执行，相当于两个独立部件，牵绊周期读，后半周期写，不会出现数据读写地址冲突的情况。</p>
+<h4 id="数据冒险">数据冒险</h4>
+<p>指后续指令需要使用前面指令的计算结果，但是前序指令还未将数据写入寄存器时，后续指令就需要读取寄存器。简单5段流水线只考虑Read
+After Write冒险。在这里我们通过插入气泡的方式进行阻塞，解决RAW冒险。</p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205105954841.png" alt="image-20231205105954841" style="zoom:50%;" /></p>
+<p>由文档描述，在MEM实现冲刷和阻塞信号的产生。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(MEMWB_rd&amp;&amp;((IDEX_rs1==EXMEM_rd)||(IDEX_rs2==EXMEM_rd))) <span class="keyword">begin</span></span><br><span class="line">            stallIF=<span class="number">1</span>;</span><br><span class="line">            stallID=<span class="number">1</span>;</span><br><span class="line">            stallEX=<span class="number">1</span>;</span><br><span class="line">            flushEX=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h4 id="控制冒险">控制冒险</h4>
+<p>控制冒险指分支和跳转指令有可能改变指令执行顺序。如果前序指令中的分支和跳转不能在IF阶段就确定下一指令的具体地址，则IF阶段会继续顺序取PC+4的指令，造成指令取指错误，在真正进行跳转时需要将流水线中错误的指令冲刷掉。</p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205110306887.png" alt="image-20231205110306887" style="zoom:50%;" /></p>
+<p>在EX阶段进行指令冲刷。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> flushIF=(PCSrc)?<span class="number">1</span>:<span class="number">0</span>;</span><br><span class="line"><span class="keyword">assign</span> flushID=(PCSrc)?<span class="number">1</span>:<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="仿真测试">仿真测试</h2>
+<p>通过本地测试，部分截图：</p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205111255674.png" alt="image-20231205111255674" style="zoom:50%;" /></p>
+<p>通过官方测试集，部分截图：</p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205111330707.png" alt="image-20231205111330707" style="zoom:50%;" /></p>
+<h2 id="fpga验证">FPGA验证</h2>
+<h2 id="思考题">思考题</h2>
+<h3 id="如何添加中断与csr寄存器支持">如何添加中断与CSR寄存器支持</h3>
+<ul>
+<li>添加CSR寄存器，用于保存异常入口地址，异常原因，和当前地址等。</li>
+<li>加入异常响应机制。一旦异常，就会保存当前状态和异常原因，并将pc跳转到异常入口地址。</li>
+</ul>
+<p>因此需要对IF阶段进行修改，实现对异常入口地址的跳转。</p>
+<p>并全程添加异常监视，一旦有异常，立刻保存当前状态并更新pc。</p>
+<h3 id="简述高级流水线设计方法">简述高级流水线设计方法</h3>
+<h4 id="总述">总述</h4>
+<p><a
+target="_blank" rel="noopener" href="https://cs.nju.edu.cn/swang/CompArchOrg_13F/slides/lecture26.pdf">L23
+(nju.edu.cn)</a></p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205113417142.png" alt="image-20231205113417142" style="zoom:50%;" /></p>
+<h4 id="arm-cortex-a9的超标量流水线">ARM Cortex-A9的超标量流水线</h4>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205113855357.png" alt="image-20231205113855357" style="zoom:50%;" /></p>
+<h4 id="core-i7的超标量流水线">Core i7的超标量流水线</h4>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205113920449.png" alt="image-20231205113920449" style="zoom:67%;" /></p>
+<h3 id="如何设计更多流水段的cpu">如何设计更多流水段的CPU</h3>
+<p>流水线的级数是越大越好吗？肯定不是。级数越大，所用的流水线寄存器相应增加，单条指令的延迟增加，流水线寄存器延迟比例增加；填满流水线的指令条数更多，指令之间的关系更加复杂。</p>
+<h4
+id="基于bram的riscv六级流水线设计">基于BRAM的RISCV六级流水线设计</h4>
+<p><a target="_blank" rel="noopener" href="https://soc.ustc.edu.cn/CECS/lab3/pipeline/">流水线解读 -
+USTC CECS 2023</a></p>
+<p><img src="https://soc.ustc.edu.cn/CECS/lab3/pipeline.assets/image-20230816200618784.png" alt="img" style="zoom:30%;" /></p>
+<p>整个流水线是基于BRAM的哈佛架构流水线处理器。主要分为以下几个流水级：</p>
+<ul>
+<li>IF1：取指第一阶段，pc从这里发起取指请求，并进行分支预测（目前流水线是静态预测不跳转）</li>
+<li>IF2：取指第二阶段，得到ICache中的指令</li>
+<li>ID：译码，得到指令的操作数、操作类型、分支类型、访存类型等信息，同时读取寄存器堆的两个源操作数。</li>
+<li>EX：执行，根据指令类型进行运算，同时对分支情况进行核验。这一级也会发起对于DCache的访存请求。</li>
+<li>MEM：访存，获取DCache中读取的数据，并通过地址和访存类型对数据进行移位处理。</li>
+<li>WB：写回，将EX和MEM阶段的结果写回寄存器堆。</li>
+</ul>
+<h4 id="arm106段">ARM10(6段)</h4>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205112421578.png" alt="image-20231205112421578" style="zoom:60%;" /></p>
+<h4 id="arm119段">ARM11(9段)</h4>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205112646728.png" alt="image-20231205112646728" style="zoom:53%;" /></p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205112728068.png" alt="image-20231205112728068" style="zoom:67%;" /></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://expelli-armus.github.io">ECHO</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://expelli-armus.github.io/2023/12/05/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU%E8%AE%BE%E8%AE%A1/">https://expelli-armus.github.io/2023/12/05/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU%E8%AE%BE%E8%AE%A1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://expelli-armus.github.io" target="_blank">落叶息风</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="Lab8 单周期CPU设计"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Lab8 单周期CPU设计</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ECHO</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Expelli-armus" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:echo110326390@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E7%BA%BFcpu%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">流水线CPU设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B4%E4%BD%93%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.</span> <span class="toc-text">实验整体方案设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.2.</span> <span class="toc-text">子模块设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if"><span class="toc-number">1.2.1.</span> <span class="toc-text">IF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#id"><span class="toc-number">1.2.2.</span> <span class="toc-text">ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ex"><span class="toc-number">1.2.3.</span> <span class="toc-text">EX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mem"><span class="toc-number">1.2.4.</span> <span class="toc-text">MEM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wb"><span class="toc-number">1.2.5.</span> <span class="toc-text">WB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E6%B0%B4%E6%AE%B5%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">1.2.6.</span> <span class="toc-text">流水段寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E9%99%A9%E5%A4%84%E7%90%86"><span class="toc-number">1.2.7.</span> <span class="toc-text">冒险处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%86%92%E9%99%A9"><span class="toc-number">1.2.7.1.</span> <span class="toc-text">结构冒险</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%86%92%E9%99%A9"><span class="toc-number">1.2.7.2.</span> <span class="toc-text">数据冒险</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%86%92%E9%99%A9"><span class="toc-number">1.2.7.3.</span> <span class="toc-text">控制冒险</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BF%E7%9C%9F%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.</span> <span class="toc-text">仿真测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fpga%E9%AA%8C%E8%AF%81"><span class="toc-number">1.4.</span> <span class="toc-text">FPGA验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E4%B8%AD%E6%96%AD%E4%B8%8Ecsr%E5%AF%84%E5%AD%98%E5%99%A8%E6%94%AF%E6%8C%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">如何添加中断与CSR寄存器支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0%E9%AB%98%E7%BA%A7%E6%B5%81%E6%B0%B4%E7%BA%BF%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.2.</span> <span class="toc-text">简述高级流水线设计方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E8%BF%B0"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">总述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#arm-cortex-a9%E7%9A%84%E8%B6%85%E6%A0%87%E9%87%8F%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">ARM Cortex-A9的超标量流水线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#core-i7%E7%9A%84%E8%B6%85%E6%A0%87%E9%87%8F%E6%B5%81%E6%B0%B4%E7%BA%BF"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">Core i7的超标量流水线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E6%9B%B4%E5%A4%9A%E6%B5%81%E6%B0%B4%E6%AE%B5%E7%9A%84cpu"><span class="toc-number">1.5.3.</span> <span class="toc-text">如何设计更多流水段的CPU</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Ebram%E7%9A%84riscv%E5%85%AD%E7%BA%A7%E6%B5%81%E6%B0%B4%E7%BA%BF%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">基于BRAM的RISCV六级流水线设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#arm106%E6%AE%B5"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">ARM10(6段)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#arm119%E6%AE%B5"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">ARM11(9段)</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/05/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU%E8%AE%BE%E8%AE%A1/" title="流水线CPU设计">流水线CPU设计</a><time datetime="2023-12-05T02:39:31.000Z" title="发表于 2023-12-05 10:39:31">2023-12-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="Lab8 单周期CPU设计">Lab8 单周期CPU设计</a><time datetime="2023-11-28T06:30:14.237Z" title="发表于 2023-11-28 14:30:14">2023-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/15/%E9%93%BE%E6%8E%A5/" title="无题">无题</a><time datetime="2023-11-15T15:43:00.000Z" title="发表于 2023-11-15 23:43:00">2023-11-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/15/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab7%20%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB%E5%AE%9E%E9%AA%8C/" title="Lab7 存储器体系实验">Lab7 存储器体系实验</a><time datetime="2023-11-15T08:27:54.350Z" title="发表于 2023-11-15 16:27:54">2023-11-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/09/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab6%20VGA%E6%8E%A5%E5%8F%A3%E5%AE%9E%E9%AA%8C/" title="Lab6 VGA接口实验">Lab6 VGA接口实验</a><time datetime="2023-11-09T06:44:08.341Z" title="发表于 2023-11-09 14:44:08">2023-11-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By ECHO</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
