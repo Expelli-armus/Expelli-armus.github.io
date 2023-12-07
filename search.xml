@@ -278,52 +278,77 @@ Optimization课程笔记(3)—局部搜索_bujbujbiu的博客-CSDN博客</a></p>
       </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>Lab2 时序逻辑电路实验</title>
     <url>/2023/09/29/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab2%20%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%AE%9E%E9%AA%8C/</url>
-    <content><![CDATA[<p>tags: [] </p>
-<p>title: Lab2 时序逻辑电路实验 </p>
-<p>categories:  </p>
-<ul>
-<li>数电实验</li>
-</ul>
-<h1 id="Lab2-时序逻辑电路实验"><a href="#Lab2-时序逻辑电路实验" class="headerlink" title="Lab2 时序逻辑电路实验"></a>Lab2 时序逻辑电路实验</h1><blockquote>
-<p><strong>221240083  陈正佺</strong></p>
+    <content><![CDATA[<h1 id="lab2-时序逻辑电路实验">Lab2 时序逻辑电路实验</h1>
+<blockquote>
+<p><strong>221240083 陈正佺</strong></p>
 </blockquote>
-<h2 id="寄存器堆设计"><a href="#寄存器堆设计" class="headerlink" title="寄存器堆设计"></a>寄存器堆设计</h2><h3 id="实验整体方案设计"><a href="#实验整体方案设计" class="headerlink" title="实验整体方案设计"></a>实验整体方案设计</h3><p>首先通过地址访问的方法构建32位寄存器堆，接着考虑我们FPGA板的情况考虑引脚的设计与输入模块</p>
-<h3 id="子模块原理说明"><a href="#子模块原理说明" class="headerlink" title="子模块原理说明"></a>子模块原理说明</h3><p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929103033592.png" alt="image-20230929103033592" style="zoom:67%;" /></p>
+<h2 id="寄存器堆设计">寄存器堆设计</h2>
+<h3 id="实验整体方案设计">实验整体方案设计</h3>
+<p>首先通过地址访问的方法构建32位寄存器堆，接着考虑我们FPGA板的情况考虑引脚的设计与输入模块</p>
+<h3 id="子模块原理说明">子模块原理说明</h3>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929103033592.png" alt="image-20230929103033592" style="zoom:67%;" /></p>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929103049152.png" alt="image-20230929103049152" style="zoom:50%;" /></p>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929103538085.png" alt="image-20230929103538085" style="zoom: 50%;" /></p>
 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//寄存器堆模块</span></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">negedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    registers[<span class="number">0</span>]&lt;=<span class="number">32&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">if</span> (we&amp;&amp;rw!=<span class="number">5&#x27;b0</span>) <span class="keyword">begin</span></span><br><span class="line">      registers[rw] &lt;= busw;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">assign</span> busa=registers[ra];</span><br><span class="line">  <span class="keyword">assign</span> busb=registers[rb];</span><br></pre></td></tr></table></figure>
 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//输入匹配模块</span></span><br><span class="line">  regfile32 regfile32_check(<span class="variable">.busa</span>(busa32),<span class="variable">.busb</span>(busb32),<span class="variable">.busw</span>(busw32),<span class="variable">.ra</span>(ra32),<span class="variable">.rb</span>(rb32),<span class="variable">.rw</span>(rw32),<span class="variable">.clk</span>(clk),<span class="variable">.we</span>(we));</span><br><span class="line">  <span class="keyword">assign</span> busa8 = busa32[<span class="number">7</span>:<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">assign</span> busb8 = busb32[<span class="number">7</span>:<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">assign</span> busw32 = &#123;<span class="number">8</span>&#123;busw&#125;&#125;;</span><br><span class="line">  <span class="keyword">assign</span> ra32 = &#123;rd_hi, ra&#125;;</span><br><span class="line">  <span class="keyword">assign</span> rb32 = &#123;rd_hi, rb&#125;;</span><br><span class="line">  <span class="keyword">assign</span> rw32 = &#123;rd_hi, rw&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="仿真测试"><a href="#仿真测试" class="headerlink" title="仿真测试"></a>仿真测试</h3><p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929103343412.png" alt="image-20230929103343412" style="zoom:50%;" /></p>
+<h3 id="仿真测试">仿真测试</h3>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929103343412.png" alt="image-20230929103343412" style="zoom:50%;" /></p>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929103409042.png" alt="image-20230929103409042" style="zoom:50%;" /></p>
 <p>可知电路满足设计需求。</p>
-<h3 id="FPGA验证"><a href="#FPGA验证" class="headerlink" title="FPGA验证"></a>FPGA验证</h3><p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929104124073.png" alt="image-20230929104124073" style="zoom: 10%;" /></p>
+<h3 id="fpga验证">FPGA验证</h3>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929104124073.png" alt="image-20230929104124073" style="zoom: 10%;" /></p>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929104158754.png" alt="image-20230929104158754" style="zoom:10%;" /></p>
-<h4 id="错误现象及分析"><a href="#错误现象及分析" class="headerlink" title="错误现象及分析"></a>错误现象及分析</h4><p>注意设置0号寄存器的值始终是0。</p>
-<h2 id="比特流加密实验"><a href="#比特流加密实验" class="headerlink" title="比特流加密实验"></a>比特流加密实验</h2><h3 id="实验整体方案设计-1"><a href="#实验整体方案设计-1" class="headerlink" title="实验整体方案设计"></a>实验整体方案设计</h3><p>需要随机二进制流生成模块lfsr，二进流反馈模块和加密解密模块。</p>
-<h3 id="子模块原理说明-1"><a href="#子模块原理说明-1" class="headerlink" title="子模块原理说明"></a>子模块原理说明</h3><figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//二进制流随机生成与载入模块</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk)<span class="keyword">begin</span></span><br><span class="line"><span class="keyword">if</span>(load)<span class="keyword">begin</span></span><br><span class="line">dout&lt;=seed;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(!load) <span class="keyword">begin</span></span><br><span class="line"><span class="comment">//反馈方程</span></span><br><span class="line">dout&lt;=&#123;dout[<span class="number">0</span>]^dout[<span class="number">1</span>]^dout[<span class="number">3</span>]^dout[<span class="number">4</span>],dout[<span class="number">63</span>:<span class="number">1</span>]&#125;;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h4 id="错误现象及分析">错误现象及分析</h4>
+<p>注意设置0号寄存器的值始终是0。</p>
+<h2 id="比特流加密实验">比特流加密实验</h2>
+<h3 id="实验整体方案设计-1">实验整体方案设计</h3>
+<p>需要随机二进制流生成模块lfsr，二进流反馈模块和加密解密模块。</p>
+<h3 id="子模块原理说明-1">子模块原理说明</h3>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//二进制流随机生成与载入模块</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk)<span class="keyword">begin</span></span><br><span class="line"><span class="keyword">if</span>(load)<span class="keyword">begin</span></span><br><span class="line">dout&lt;=seed;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(!load) <span class="keyword">begin</span></span><br><span class="line"><span class="comment">//反馈方程</span></span><br><span class="line">dout&lt;=&#123;dout[<span class="number">0</span>]^dout[<span class="number">1</span>]^dout[<span class="number">3</span>]^dout[<span class="number">4</span>],dout[<span class="number">63</span>:<span class="number">1</span>]&#125;;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="comment">//加密模块</span></span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk)<span class="keyword">begin</span></span><br><span class="line"><span class="keyword">if</span>(load)<span class="keyword">begin</span></span><br><span class="line">t&lt;=<span class="number">3&#x27;d0</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(!load)<span class="keyword">begin</span></span><br><span class="line"><span class="keyword">if</span>(t==<span class="number">3&#x27;d5</span>)<span class="keyword">begin</span></span><br><span class="line">t&lt;=<span class="number">3&#x27;d0</span>;</span><br><span class="line">ready&lt;=<span class="number">1&#x27;b1</span>;</span><br><span class="line">key&lt;=dout[<span class="number">63</span>:<span class="number">58</span>];</span><br><span class="line">dataout&lt;=&#123;<span class="number">2&#x27;b01</span>,dout[<span class="number">63</span>:<span class="number">58</span>]^datain[<span class="number">5</span>:<span class="number">0</span>]&#125;;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(t==<span class="number">3&#x27;d0</span>)<span class="keyword">begin</span></span><br><span class="line">t&lt;=<span class="number">3&#x27;d1</span>;</span><br><span class="line">ready&lt;=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(t==<span class="number">3&#x27;d1</span>)t&lt;=<span class="number">3&#x27;d2</span>;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(t==<span class="number">3&#x27;d2</span>)t&lt;=<span class="number">3&#x27;d3</span>;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(t==<span class="number">3&#x27;d3</span>)t&lt;=<span class="number">3&#x27;d4</span>;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(t==<span class="number">3&#x27;d4</span>)t&lt;=<span class="number">3&#x27;d5</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929105101339.png" alt="image-20230929105101339" style="zoom:33%;" /></p>
-<h3 id="仿真测试-1"><a href="#仿真测试-1" class="headerlink" title="仿真测试"></a>仿真测试</h3><p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929105204106.png" alt="image-20230929105204106" style="zoom:57%;" /></p>
+<h3 id="仿真测试-1">仿真测试</h3>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929105204106.png" alt="image-20230929105204106" style="zoom:57%;" /></p>
 <p>可知电路满足设计要求。</p>
-<h3 id="FPGA验证-1"><a href="#FPGA验证-1" class="headerlink" title="FPGA验证"></a>FPGA验证</h3><p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929105623977.png" alt="image-20230929105623977" style="zoom:15%;" /> <img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929105703002.png" alt="image-20230929105703002" style="zoom:15%;" /></p>
-<h4 id="错误现象及分析-1"><a href="#错误现象及分析-1" class="headerlink" title="错误现象及分析"></a>错误现象及分析</h4><p>注意阻态与非阻态符号的区别，不要错误的计算为第7,13…周期的密码。</p>
-<h2 id="数字时钟实验"><a href="#数字时钟实验" class="headerlink" title="数字时钟实验"></a>数字时钟实验</h2><h3 id="实验整体方案设计-2"><a href="#实验整体方案设计-2" class="headerlink" title="实验整体方案设计"></a>实验整体方案设计</h3><p>实现一个数字时钟，在七段数码管上分别显示 2 位十进制数的时、分、秒。要求能够复位；可以设置初始时间；整点报时，闪烁点亮三色 LED 灯。因此我们需要分频模块得到1HZ的计数器，7段码模块进行4位BCD码和7段数码管的转换，并引用计数器文件进行计数，最后实现led模块。</p>
-<h3 id="子模块原理说明-2"><a href="#子模块原理说明-2" class="headerlink" title="子模块原理说明"></a>子模块原理说明</h3><h4 id="分频模块"><a href="#分频模块" class="headerlink" title="分频模块"></a>分频模块</h4><p>利用群文件的分频器，设置两个clk，一个为1Hz用于计数，另一个为1000Hz，使得7段数码管不停闪烁以达到6个数码管“同时”显示的效果。</p>
-<h4 id="7段数码管模块"><a href="#7段数码管模块" class="headerlink" title="7段数码管模块"></a>7段数码管模块</h4><p>这里直接引用lab1的模块即可。</p>
-<h4 id="计数器模块"><a href="#计数器模块" class="headerlink" title="计数器模块"></a>计数器模块</h4><p>pdf上面有介绍。</p>
+<h3 id="fpga验证-1">FPGA验证</h3>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929105623977.png" alt="image-20230929105623977" style="zoom:15%;" />
+<img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929105703002.png" alt="image-20230929105703002" style="zoom:15%;" /></p>
+<h4 id="错误现象及分析-1">错误现象及分析</h4>
+<p>注意阻态与非阻态符号的区别，不要错误的计算为第7,13...周期的密码。</p>
+<h2 id="数字时钟实验">数字时钟实验</h2>
+<h3 id="实验整体方案设计-2">实验整体方案设计</h3>
+<p>实现一个数字时钟，在七段数码管上分别显示 2
+位十进制数的时、分、秒。要求能够复位；可以设置初始时间；整点报时，闪烁点亮三色
+LED
+灯。因此我们需要分频模块得到1HZ的计数器，7段码模块进行4位BCD码和7段数码管的转换，并引用计数器文件进行计数，最后实现led模块。</p>
+<h3 id="子模块原理说明-2">子模块原理说明</h3>
+<h4 id="分频模块">分频模块</h4>
+<p>利用群文件的分频器，设置两个clk，一个为1Hz用于计数，另一个为1000Hz，使得7段数码管不停闪烁以达到6个数码管“同时”显示的效果。</p>
+<h4 id="段数码管模块">7段数码管模块</h4>
+<p>这里直接引用lab1的模块即可。</p>
+<h4 id="计数器模块">计数器模块</h4>
+<p>pdf上面有介绍。</p>
 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @ (input_seconds) <span class="keyword">begin</span></span><br><span class="line">    seconds_remaining = input_seconds;</span><br><span class="line">    hour = seconds_remaining / <span class="number">3600</span>;</span><br><span class="line">    seconds_remaining = seconds_remaining - hour * <span class="number">3600</span>;</span><br><span class="line">    minute = seconds_remaining / <span class="number">60</span>;</span><br><span class="line">    seconds_remaining = seconds_remaining - minute * <span class="number">60</span>;</span><br><span class="line">    second = seconds_remaining;</span><br><span class="line">    <span class="comment">//接下来确定十位和个位</span></span><br><span class="line">    hour_tens = hour / <span class="number">10</span>;</span><br><span class="line">    hour_ones = hour - hour_tens * <span class="number">10</span>;</span><br><span class="line">    minute_tens = minute / <span class="number">10</span>;</span><br><span class="line">    minute_ones = minute - minute_tens * <span class="number">10</span>;</span><br><span class="line">    second_tens = second / <span class="number">10</span>;</span><br><span class="line">    second_ones = second - second_tens * <span class="number">10</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h4 id="主模块"><a href="#主模块" class="headerlink" title="主模块"></a>主模块</h4><p>主要以正确的逻辑将上面的模块合理拼接。</p>
+<h4 id="主模块">主模块</h4>
+<p>主要以正确的逻辑将上面的模块合理拼接。</p>
 <figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> rst <span class="keyword">or</span> <span class="keyword">posedge</span> sclk)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(rst == <span class="number">1</span>) <span class="keyword">begin</span> seccount = <span class="number">17&#x27;b0</span>;countdown = <span class="number">4&#x27;b0000</span>;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i = i+<span class="number">1</span>) begintimes[i] = pre_times[i];<span class="keyword">end</span> <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(s == <span class="number">2&#x27;b00</span>)<span class="keyword">begin</span> </span><br><span class="line">            seccount = (seccount &gt; <span class="number">17&#x27;d86398</span>) ? <span class="number">17&#x27;d0</span> : (seccount + <span class="number">1</span>);</span><br><span class="line">            times[<span class="number">7</span>] &lt;= pre_times[<span class="number">7</span>];times[<span class="number">6</span>] &lt;= pre_times[<span class="number">6</span>];times[<span class="number">4</span>] &lt;= pre_times[<span class="number">4</span>];</span><br><span class="line">            times[<span class="number">3</span>] &lt;= pre_times[<span class="number">3</span>];times[<span class="number">1</span>] &lt;= pre_times[<span class="number">1</span>];times[<span class="number">0</span>] &lt;= pre_times[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">if</span>(times[<span class="number">4</span>] == <span class="number">5</span> &amp; times[<span class="number">3</span>] == <span class="number">9</span> &amp; times[<span class="number">1</span>] == <span class="number">5</span> &amp; times[<span class="number">0</span>] == <span class="number">9</span>) <span class="keyword">begin</span></span><br><span class="line">                <span class="keyword">if</span>(times[<span class="number">7</span>] == <span class="number">2</span> &amp; times[<span class="number">6</span>] == <span class="number">3</span>) countdown = <span class="number">4&#x27;d11</span>;</span><br><span class="line">                <span class="keyword">else</span>   countdown = <span class="number">4&#x27;d7</span>;</span><br><span class="line">            <span class="keyword">end</span> <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(s == <span class="number">2&#x27;b01</span>) <span class="keyword">begin</span> <span class="comment">//表示设置小时的高位和低位</span></span><br><span class="line">            times[<span class="number">7</span>] &lt;= data_h; times[<span class="number">6</span>] &lt;= data_l;</span><br><span class="line">            seccount &lt;= data_h * <span class="number">36000</span> + data_l * <span class="number">3600</span> + times[<span class="number">4</span>] * <span class="number">600</span> + times[<span class="number">3</span>] * <span class="number">60</span> + times[<span class="number">1</span>] * <span class="number">10</span> + times[<span class="number">0</span>];<span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(s == <span class="number">2&#x27;b10</span>) <span class="keyword">begin</span> <span class="comment">//设置分钟</span></span><br><span class="line">            times[<span class="number">4</span>] &lt;= data_h; times[<span class="number">3</span>] &lt;= data_l;</span><br><span class="line">            seccount &lt;= times[<span class="number">7</span>] * <span class="number">36000</span> + times[<span class="number">6</span>] * <span class="number">3600</span> + data_h * <span class="number">600</span> + data_l * <span class="number">60</span> + times[<span class="number">1</span>] * <span class="number">10</span> + times[<span class="number">0</span>];<span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span> <span class="comment">//设置秒</span></span><br><span class="line">            times[<span class="number">1</span>] &lt;= data_h; times[<span class="number">0</span>] &lt;= data_l;</span><br><span class="line">            seccount &lt;= times[<span class="number">7</span>] * <span class="number">36000</span> + times[<span class="number">6</span>] * <span class="number">3600</span> + times[<span class="number">4</span>] * <span class="number">600</span> + times[<span class="number">3</span>] * <span class="number">60</span> + data_h * <span class="number">10</span> + data_l;<span class="keyword">end</span></span><br><span class="line">        <span class="keyword">if</span>(countdown != <span class="number">4&#x27;b0</span>) countdown = countdown-<span class="number">1</span>;<span class="keyword">end</span> <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929111038093.png" alt="image-20230929111038093" style="zoom:47%;" /></p>
-<h3 id="FPGA验证-2"><a href="#FPGA验证-2" class="headerlink" title="FPGA验证"></a>FPGA验证</h3><p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929111733844.png" alt="image-20230929111733844" style="zoom:25%;" /></p>
+<h3 id="fpga验证-2">FPGA验证</h3>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929111733844.png" alt="image-20230929111733844" style="zoom:25%;" /></p>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20230929111815891.png" alt="image-20230929111815891" style="zoom:25%;" /></p>
-<h4 id="错误现象及分析-2"><a href="#错误现象及分析-2" class="headerlink" title="错误现象及分析"></a>错误现象及分析</h4><p>注意频率过快人眼是看不到的，因此不能用100mHz来进行7段码的闪烁。</p>
-<h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><p>1.<strong>分析32个32位的寄存器堆占用的逻辑片资源。</strong></p>
-<p>我们的寄存器堆是由D触发器建立的，32个D触发器构成一个32位寄存器，每个D触发器需要使用4个逻辑片资源。那么32个32位的寄存器堆将需要占用逻辑片资源为$32<em>32</em>4=4096$。</p>
-<p>2.<strong>分析 64 位移位寄存器的时序性能和资源占用情况；并通过资料查找到其他的生成 LFSR 的反馈公式。</strong></p>
-<p>移位寄存器通常通过把低位 D 触发器输出接入到高位 D 触发器输入端来实现。第一个D触发器接收输入数据，随着时钟的上升沿，数据从第一位开始被逐位传递到下一个D触发器，直到到达最高位D触发器。当时钟信号发生上升沿时，最低位的数据被移位到仅次于它的位，最终推出寄存器，然后新的数据被输入到最低位的D触发器，以此类推。</p>
+<h4 id="错误现象及分析-2">错误现象及分析</h4>
+<p>注意频率过快人眼是看不到的，因此不能用100mHz来进行7段码的闪烁。</p>
+<h2 id="思考题">思考题</h2>
+<p>1.<strong>分析32个32位的寄存器堆占用的逻辑片资源。</strong></p>
+<p>我们的寄存器堆是由D触发器建立的，32个D触发器构成一个32位寄存器，每个D触发器需要使用4个逻辑片资源。那么32个32位的寄存器堆将需要占用逻辑片资源为<span
+class="math inline">\(32*32*4=4096\)</span>。</p>
+<p>2.<strong>分析 64
+位移位寄存器的时序性能和资源占用情况；并通过资料查找到其他的生成 LFSR
+的反馈公式。</strong></p>
+<p>移位寄存器通常通过把低位 D 触发器输出接入到高位 D
+触发器输入端来实现。第一个D触发器接收输入数据，随着时钟的上升沿，数据从第一位开始被逐位传递到下一个D触发器，直到到达最高位D触发器。当时钟信号发生上升沿时，最低位的数据被移位到仅次于它的位，最终推出寄存器，然后新的数据被输入到最低位的D触发器，以此类推。</p>
 <p>因为每一位的移位操作是顺序进行的，不需要复杂的逻辑电路。时序性能主要由时钟频率和触发器延迟等因素决定。由于使用了级联连接，资源占用相对较小，只需要64个D触发器和连接它们的信号线。在移位操作中，由于每一位之间是独立的，可以实现并行的移位操作，提高了性能。</p>
 <p>因此，使用级联的D触发器连接的64位移位寄存器具有较好的时序性能和较小的资源占用情况。</p>
 <p>斐波那契LFSR:</p>
@@ -343,6 +368,9 @@ Optimization课程笔记(3)—局部搜索_bujbujbiu的博客-CSDN博客</a></p>
 <p>将计数器变量的值以合适的格式显示在数字时钟上。</p>
 <p>考虑到显示器刷新的速度，可以选择每秒更新一次显示器，将计数器变量的值转换为秒和毫秒的格式，显示在数字时钟上。</p>
 ]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
   </entry>
   <entry>
     <title>Lab1 4路3位数据传输实验</title>
