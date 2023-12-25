@@ -1,90 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>00x1位运算</title>
-    <url>/2023/08/03/00x1%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
-    <content><![CDATA[<h1 id="x1-位运算">00x1 位运算</h1>
-<h2 id="基本介绍">基本介绍</h2>
-<h3 id="逻辑运算">逻辑运算</h3>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">与</th>
-<th style="text-align: center;">或</th>
-<th style="text-align: center;">非</th>
-<th style="text-align: center;">异或</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">&amp;</td>
-<td style="text-align: center;">|</td>
-<td style="text-align: center;">~</td>
-<td style="text-align: center;">xor</td>
-</tr>
-</tbody>
-</table>
-<h3 id="移位运算">移位运算</h3>
-<p>左移:1&lt;&lt;n, n&lt;&lt;1</p>
-<p>算数右移:向下取整（-3）&gt;&gt;1=-2, 3&gt;&gt;1=1</p>
-<p>而整数/2在c++中实现“除以二向0取整”，即先取整再添加符号</p>
-<h2 id="移位运算-1">移位运算</h2>
-<h3 id="位整数乘法">64位整数乘法</h3>
-<p>求<span class="math inline">\(a*b mod p\)</span>的值，其中<span
-class="math inline">\(1\le a,b,p\le 10^{18}\)</span>。</p>
-<h4 id="方法一">方法一</h4>
-<p>类似快速幂的思想</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ll <span class="title">mul</span><span class="params">(ll a,ll b,ll p)</span></span>&#123;</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;b;b&gt;&gt;<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(b&amp;<span class="number">1</span>)ans=(ans+a)%p;<span class="comment">//个位是奇数就直接加a</span></span><br><span class="line">		a=a*<span class="number">2</span>%p;<span class="comment">//将b的阶数转移到a上</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="方法二">方法二</h4>
-<p>利用<span class="math inline">\(a*b mod p=a*b-\lfloor a*b/p\rfloor
-*p\)</span>(带余除法)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ll <span class="title">mul</span><span class="params">(ll a,ll b,ll c)</span></span>&#123;</span><br><span class="line">	a%=p;b%=p;</span><br><span class="line">    ll c=(ld)a*b/p;</span><br><span class="line">    ll ans=a*b-c*p;</span><br><span class="line">    <span class="keyword">if</span>(ans&lt;<span class="number">0</span>)ans+=p;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(ans&gt;=p)ans-=p;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="二进制状态压缩">二进制状态压缩</h2>
-<p>将一个长为m的bool数组用一个m位二进制整数表示并存储的办法。</p>
-<table>
-<thead>
-<tr class="header">
-<th>操作</th>
-<th>运算</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>取第k位</td>
-<td>(n&gt;&gt;k)&amp;1</td>
-</tr>
-<tr class="even">
-<td>取0~k-1位（即后k位）</td>
-<td>n&amp;(1&lt;&lt;k-1)</td>
-</tr>
-<tr class="odd">
-<td>第k位取反</td>
-<td>n xor 1&lt;&lt;k</td>
-</tr>
-<tr class="even">
-<td>第k位赋值为1</td>
-<td>n|(1&lt;&lt;k)</td>
-</tr>
-<tr class="odd">
-<td>第k位赋值为0</td>
-<td>n&amp;(~(1&lt;&lt;k))</td>
-</tr>
-</tbody>
-</table>
-<h3 id="最短hamilton路径">最短Hamilton路径</h3>
-<p>给定一张n(<span class="math inline">\(n\le
-20\)</span>)个点的带权无向图，点从0~n-1标号，求起点0到终点n-1的最短Hamilton路径(从0到n-1经过每个点恰一次)。</p>
-<p>很容易想到本题的一种“朴素”做法，即穷举，时间复杂度O(n*n!),利用二进制状态压缩DP可以优化到<span
-class="math inline">\(O(n^2 *2^n)\)</span>。</p>
-<p>用一个n位二进制数表示点的经过状态。用F[i,j]表示点的经过状态为i，且目前处于点j的最短路径。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> f[<span class="number">1</span>&lt;&lt;<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">hamilton</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> weight[<span class="number">20</span>][<span class="number">20</span>])</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(f,<span class="number">0x3f</span>,<span class="built_in">sizeof</span>(f));</span><br><span class="line">    f[<span class="number">1</span>][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;<span class="number">1</span>&lt;&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;<span class="keyword">if</span>(i&gt;&gt;j&amp;<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;n;k++)&#123;<span class="keyword">if</span>((i^<span class="number">1</span>&lt;&lt;j)&gt;&gt;k&amp;<span class="number">1</span>)</span><br><span class="line">                f[i][j]=<span class="built_in">min</span>(f[i][j],f[i^<span class="number">1</span>&lt;&lt;j][k]+weight[k][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[<span class="number">1</span>&lt;&lt;n<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="例题起床困难综合症">[例题]起床困难综合症</h3>
-]]></content>
-      <categories>
-        <category>算法竞赛进阶指南</category>
-      </categories>
-  </entry>
-  <entry>
     <title>JH学习笔记</title>
     <url>/2023/10/25/JH%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="算法基础">2.3 算法基础</h1>
@@ -222,6 +138,113 @@ Optimization课程笔记(3)—局部搜索_bujbujbiu的博客-CSDN博客</a></p>
       </categories>
   </entry>
   <entry>
+    <title></title>
+    <url>/2023/04/08/IF%20ANYTHING%20HAPENS%20I%20LOVE%20YOU/</url>
+    <content><![CDATA[<hr />
+<h1 id="if-anything-hapens-i-love-you">IF ANYTHING HAPENS I LOVE
+YOU</h1>
+<p>真相，还是交给你自己去看。 谁也无法彻底走进别人的悲痛。
+大多数时候，我们的感动和醒悟，都只是匆忙地掠过别人的一生。 但就是一眼。
+也足以成为，彼此留存一生的信物。</p>
+]]></content>
+      <categories>
+        <category>小记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>00x1位运算</title>
+    <url>/2023/08/03/00x1%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
+    <content><![CDATA[<h1 id="x1-位运算">00x1 位运算</h1>
+<h2 id="基本介绍">基本介绍</h2>
+<h3 id="逻辑运算">逻辑运算</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">与</th>
+<th style="text-align: center;">或</th>
+<th style="text-align: center;">非</th>
+<th style="text-align: center;">异或</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">&amp;</td>
+<td style="text-align: center;">|</td>
+<td style="text-align: center;">~</td>
+<td style="text-align: center;">xor</td>
+</tr>
+</tbody>
+</table>
+<h3 id="移位运算">移位运算</h3>
+<p>左移:1&lt;&lt;n, n&lt;&lt;1</p>
+<p>算数右移:向下取整（-3）&gt;&gt;1=-2, 3&gt;&gt;1=1</p>
+<p>而整数/2在c++中实现“除以二向0取整”，即先取整再添加符号</p>
+<h2 id="移位运算-1">移位运算</h2>
+<h3 id="位整数乘法">64位整数乘法</h3>
+<p>求<span class="math inline">\(a*b mod p\)</span>的值，其中<span
+class="math inline">\(1\le a,b,p\le 10^{18}\)</span>。</p>
+<h4 id="方法一">方法一</h4>
+<p>类似快速幂的思想</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ll <span class="title">mul</span><span class="params">(ll a,ll b,ll p)</span></span>&#123;</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;b;b&gt;&gt;<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(b&amp;<span class="number">1</span>)ans=(ans+a)%p;<span class="comment">//个位是奇数就直接加a</span></span><br><span class="line">		a=a*<span class="number">2</span>%p;<span class="comment">//将b的阶数转移到a上</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方法二">方法二</h4>
+<p>利用<span class="math inline">\(a*b mod p=a*b-\lfloor a*b/p\rfloor
+*p\)</span>(带余除法)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ll <span class="title">mul</span><span class="params">(ll a,ll b,ll c)</span></span>&#123;</span><br><span class="line">	a%=p;b%=p;</span><br><span class="line">    ll c=(ld)a*b/p;</span><br><span class="line">    ll ans=a*b-c*p;</span><br><span class="line">    <span class="keyword">if</span>(ans&lt;<span class="number">0</span>)ans+=p;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(ans&gt;=p)ans-=p;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二进制状态压缩">二进制状态压缩</h2>
+<p>将一个长为m的bool数组用一个m位二进制整数表示并存储的办法。</p>
+<table>
+<thead>
+<tr class="header">
+<th>操作</th>
+<th>运算</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>取第k位</td>
+<td>(n&gt;&gt;k)&amp;1</td>
+</tr>
+<tr class="even">
+<td>取0~k-1位（即后k位）</td>
+<td>n&amp;(1&lt;&lt;k-1)</td>
+</tr>
+<tr class="odd">
+<td>第k位取反</td>
+<td>n xor 1&lt;&lt;k</td>
+</tr>
+<tr class="even">
+<td>第k位赋值为1</td>
+<td>n|(1&lt;&lt;k)</td>
+</tr>
+<tr class="odd">
+<td>第k位赋值为0</td>
+<td>n&amp;(~(1&lt;&lt;k))</td>
+</tr>
+</tbody>
+</table>
+<h3 id="最短hamilton路径">最短Hamilton路径</h3>
+<p>给定一张n(<span class="math inline">\(n\le
+20\)</span>)个点的带权无向图，点从0~n-1标号，求起点0到终点n-1的最短Hamilton路径(从0到n-1经过每个点恰一次)。</p>
+<p>很容易想到本题的一种“朴素”做法，即穷举，时间复杂度O(n*n!),利用二进制状态压缩DP可以优化到<span
+class="math inline">\(O(n^2 *2^n)\)</span>。</p>
+<p>用一个n位二进制数表示点的经过状态。用F[i,j]表示点的经过状态为i，且目前处于点j的最短路径。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> f[<span class="number">1</span>&lt;&lt;<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">hamilton</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> weight[<span class="number">20</span>][<span class="number">20</span>])</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(f,<span class="number">0x3f</span>,<span class="built_in">sizeof</span>(f));</span><br><span class="line">    f[<span class="number">1</span>][<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;<span class="number">1</span>&lt;&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;<span class="keyword">if</span>(i&gt;&gt;j&amp;<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;n;k++)&#123;<span class="keyword">if</span>((i^<span class="number">1</span>&lt;&lt;j)&gt;&gt;k&amp;<span class="number">1</span>)</span><br><span class="line">                f[i][j]=<span class="built_in">min</span>(f[i][j],f[i^<span class="number">1</span>&lt;&lt;j][k]+weight[k][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[<span class="number">1</span>&lt;&lt;n<span class="number">-1</span>][n<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="例题起床困难综合症">[例题]起床困难综合症</h3>
+]]></content>
+      <categories>
+        <category>算法竞赛进阶指南</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第一章 计算机系统概述</title>
+    <url>/2023/10/25/ICS/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<h1 id="计算机系统概述">计算机系统概述</h1>
+]]></content>
+      <categories>
+        <category>ICS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2023/01/25/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very
@@ -250,17 +273,12 @@ href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
   <entry>
-    <title></title>
-    <url>/2023/04/08/IF%20ANYTHING%20HAPENS%20I%20LOVE%20YOU/</url>
-    <content><![CDATA[<hr />
-<h1 id="if-anything-hapens-i-love-you">IF ANYTHING HAPENS I LOVE
-YOU</h1>
-<p>真相，还是交给你自己去看。 谁也无法彻底走进别人的悲痛。
-大多数时候，我们的感动和醒悟，都只是匆忙地掠过别人的一生。 但就是一眼。
-也足以成为，彼此留存一生的信物。</p>
+    <title>第四章 程序的链接</title>
+    <url>/2023/10/27/ICS/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[
 ]]></content>
       <categories>
-        <category>小记</category>
+        <category>ICS</category>
       </categories>
   </entry>
   <entry>
@@ -302,347 +320,8 @@ href="https://zhuanlan.zhihu.com/p/452443183">大物（下）-电磁学例题笔
       </categories>
   </entry>
   <entry>
-    <title>第四章 程序的链接</title>
-    <url>/2023/12/22/ICS/PA3%20-%20%E7%A9%BF%E8%B6%8A%E6%97%B6%E7%A9%BA%E7%9A%84%E6%97%85%E7%A8%8B%20%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<h1 id="pa3---穿越时空的旅程-批处理系统">PA3 - 穿越时空的旅程:
-批处理系统</h1>
-<h2 id="实验进度">实验进度</h2>
-<p>我完成了所有的必答题和部分选做和思考题。</p>
-<h2 id="必答题">必答题</h2>
-<ul>
-<li><a href="#理解上下文结构体的前世今生">理解上下文结构体的前世今生</a>
-(见PA3.1阶段)</li>
-<li><a href="#理解穿越时空的旅程">理解穿越时空的旅程</a>
-(见PA3.1阶段)</li>
-<li><a href="#hello程序">hello程序是什么, 它从而何来, 要到哪里去</a>
-(见PA3.2阶段)</li>
-<li><a href="#仙剑奇侠传究竟如何运行">仙剑奇侠传究竟如何运行</a></li>
-</ul>
-<h2 id="异常响应机制">异常响应机制</h2>
-<blockquote>
-<p>我们知道进行函数调用的时候也需要保存调用者的状态: 返回地址,
-以及calling convention中需要调用者保存的寄存器.
-而CTE在保存上下文的时候却要保存更多的信息. 尝试对比它们,
-并思考两者保存信息不同是什么原因造成的.</p>
-</blockquote>
-<p>中断后执行的操作很复杂。程序是个状态机，为了保证在恢复上下文时可以恢复到原来的状态机，需要保存更多的信息。</p>
-<blockquote>
-<p>x86的<code>trap.S</code>中有一行<code>pushl %esp</code>的代码,
-乍看之下其行为十分诡异. 你能结合前后的代码理解它的行为吗?</p>
-<p>Hint: 程序是个状态机.</p>
-</blockquote>
-<p>在<code>riscv</code>的 <code>trap.S</code> 中表现为
-<code>mv a0, sp</code>。<code>trap.S</code>对32个寄存器和CSR寄存器压栈，形成一个Context结构体。
-最后的<code>mv a0, sp</code> 是将 <code>__am_irq_handle</code>
-的参数设为<code>ao</code>。<code>pushl %esp</code>这里的
-<code>esp</code> 的内容就是上下文结构体的地址。</p>
-<blockquote>
-<p><a id="理解上下文结构体的前世今生"></a> <a id="trap.S"></a></p>
-<p>你会在<code>__am_irq_handle()</code>中看到有一个上下文结构指针<code>c</code>,
-<code>c</code>指向的上下文结构究竟在哪里? 这个上下文结构又是怎么来的?
-具体地, 这个上下文结构有很多成员, 每一个成员究竟在哪里赋值的?
-<code>$ISA-nemu.h</code>, <code>trap.S</code>, 上述讲义文字,
-以及你刚刚在NEMU中实现的新指令, 这四部分内容又有什么联系?</p>
-</blockquote>
-<p>上下文结构体在<code>__am_asm_trap()</code>函数的调用栈中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#开辟结构体空间</span><br><span class="line">addi sp, sp, -CONTEXT_SIZE</span><br><span class="line">#将REGS压栈</span><br><span class="line">  MAP(REGS, PUSH)</span><br><span class="line">#特殊寄存器不能直接压栈，先将其值保存到通用寄存器中。</span><br><span class="line">  csrr t0, mcause</span><br><span class="line">  csrr t1, mstatus</span><br><span class="line">  csrr t2, mepc</span><br><span class="line"></span><br><span class="line">  STORE t0, OFFSET_CAUSE(sp)</span><br><span class="line">  STORE t1, OFFSET_STATUS(sp)</span><br><span class="line">  STORE t2, OFFSET_EPC(sp)</span><br><span class="line"></span><br><span class="line">  # set mstatus.MPRV to pass difftest</span><br><span class="line">  li a0, (1 &lt;&lt; 17)</span><br><span class="line">  or t1, t1, a0</span><br><span class="line">  csrw mstatus, t1</span><br><span class="line">#a0寄存器保存了第一个参数的值，函数 __am_irq_handle 的参数是 Context *c，因此a0作为参数传入__am_irq_handle()函数。</span><br><span class="line">  mv a0, sp</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>事实上, 自陷只是其中一种异常类型. 有一种故障类异常,
-它们返回的PC和触发异常的PC是同一个, 例如缺页异常, 在系统将故障排除后,
-将会重新执行相同的指令进行重试, 因此异常返回的PC无需加4.
-所以根据异常类型的不同, 有时候需要加4, 有时候则不需要加.</p>
-<p>这时候, 我们就可以考虑这样的一个问题了: 决定要不要加4的,
-是硬件还是软件呢? CISC和RISC的做法正好相反, CISC都交给硬件来做,
-而RISC则交给软件来做. 思考一下, 这两种方案各有什么取舍?
-你认为哪种更合理呢? 为什么?</p>
-</blockquote>
-<p>个人感觉放在软件合适。CPU只负责执行指令，软件负责控制逻辑。是否需要<code>pc+4</code>与具体的中断原因有关，因此在软件层面进行判断较为合适。在软件中判断中断类型后判断该位置是否需要再次执行。</p>
-<blockquote>
-<p><a id="理解穿越时空的旅程"></a></p>
-<p>从<code>yield test</code>调用<code>yield()</code>开始,
-到从<code>yield()</code>返回的期间, 这一趟旅程具体经历了什么? 软(AM,
-<code>yield test</code>)硬(NEMU)件是如何相互协助来完成这趟旅程的?
-你需要解释这一过程中的每一处细节, 包括涉及的每一行汇编代码/C代码的行为,
-尤其是一些比较关键的指令/变量. 事实上,
-上文的必答题"理解上下文结构体的前世今生"已经涵盖了这趟旅程中的一部分,
-你可以把它的回答包含进来.</p>
-</blockquote>
-<p>yield test中，首先调用<code>cte_init()</code>进行初始化。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// initialize exception entry设置异常入口地址设置到mtvec寄存器中</span></span><br><span class="line">  <span class="keyword">asm</span> <span class="title function_">volatile</span><span class="params">(<span class="string">&quot;csrw mtvec, %0&quot;</span> : : <span class="string">&quot;r&quot;</span>(__am_asm_trap))</span>;</span><br><span class="line"><span class="comment">// register event handler处理回调函数</span></span><br><span class="line">  user_handler = handler;</span><br></pre></td></tr></table></figure>
-<p>接下来调用<code>yield()</code>，执行两条汇编指令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">asm volatile(&quot;li a7, -1; ecall&quot;);</span><br><span class="line">#向a7寄存器写入 -1，a7 寄存器传递中断类型。</span><br><span class="line">#ecall发生中断。</span><br></pre></td></tr></table></figure>
-<p><code>ecall</code>指令调用了 <code>isa_raise_intr</code>
-函数，将当前的异常<code>pc</code>和终端原因保存到特殊寄存器里，并跳转到异常入口地址，即<code>__am_asm_trap</code>。</p>
-<p><code>__am_asm_trap</code> 函数在 <code>trap.S</code> 中定义，见<a
-href="#trap.S">这里</a>。保存好上下文后进入函数
-<code>__am_irq_handle</code>。打包出事件结构体<code>ev</code>，对<code>yield()</code>来说，<code>ev.event = EVENT_YIELD</code>。根据我们初始化的<code>handler</code>调用之前注册的回调函数<code>simple_trap</code>。</p>
-<p>根据Event结构体中的事件编号识别事件，做出相应的输出，对于<code>yield</code>，<code>case EVENT_YIELD: putch('y'); break;</code>。因此会不断输出<code>y</code>。</p>
-<blockquote>
-<p>我们在PA2中提到, 标准的mips32处理器采用了分支延迟槽技术. 思考一下,
-如果标准的mips32处理器在执行延迟槽指令的时候触发了异常,
-从异常返回之后可能会造成什么问题? 该如何解决?
-尝试RTFM对比你的解决方案.</p>
-</blockquote>
-<p>MIPS的分支跳转指令流是：分支跳转指令 -&gt; 延时槽指令 -&gt;
-目标跳转地址的指令，在中间操作插入了延时槽指令。</p>
-<p>延迟槽的作用就是通过找与分支无关的指令（或者不影响分支运行的指令）去充分利用分支的空间，进而削弱预测分支的副作用，减少分支延迟。这样，跳转的指令会先进入分支延迟槽，再作为要跳转的目标指令。如果在分支延迟槽指令处出现了异常，中断返回时返回延时槽指令地址的话，重新执行的指令流为：延时槽指令
--&gt; (延时槽指令地址 + 4)地址的指令，不能正常跳转。</p>
-<p>为了恢复原来的指令流，需要将延时槽前面的跳转指令重新装入流水线（会再次执行延时槽中的指令，不过不一定在产生异常了，比如上一次产生的异常是可恢复的中断）。</p>
-<h2 id="用户程序和系统调用">用户程序和系统调用</h2>
-<blockquote>
-<p>我们提到了代码和数据都在可执行文件里面,
-但却没有提到堆(heap)和栈(stack).
-为什么堆和栈的内容没有放入可执行文件里面?
-那程序运行时刻用到的堆和栈又是怎么来的?
-AM的代码是否能给你带来一些启发?</p>
-</blockquote>
-<p>在链接脚本<code>abstract-machine/scripts/linker.ld</code>里有体现堆和栈的边界：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">_stack_top = ALIGN(<span class="number">0x1000</span>);</span><br><span class="line">  . = _stack_top + <span class="number">0x8000</span>;</span><br><span class="line">  _stack_pointer = .;</span><br><span class="line">  end = .;</span><br><span class="line">  _end = .;</span><br><span class="line">  _heap_start = ALIGN(<span class="number">0x1000</span>);</span><br><span class="line"><span class="comment">//定义了栈顶、栈指针和堆的起点。</span></span><br></pre></td></tr></table></figure>
-<p>可见，堆和栈存放在内存当中，在程序运行时用到堆和栈从内存中动态申请。</p>
-<blockquote>
-<p>如果你在GNU/Linux下执行一个从Windows拷过来的可执行文件,
-将会报告"格式错误". 思考一下, GNU/Linux是如何知道"格式错误"的?</p>
-</blockquote>
-<p>ELF文件的开头都有一个特殊的魔数,
-为了防止加载一个非ELF格式的文件。GNU/Linux
-在执行前先依据魔数判断这是否是一个 ELF 格式的可执行文件。</p>
-<blockquote>
-<p>使用<code>readelf</code>查看一个ELF文件的信息,
-你会看到一个segment包含两个大小的属性,
-分别是<code>FileSiz</code>和<code>MemSiz</code>, 这是为什么?
-再仔细观察一下,
-你会发现<code>FileSiz</code>通常不会大于相应的<code>MemSiz</code>,
-这又是为什么?</p>
-</blockquote>
-<p><code>FileSiz</code>就是数据在文件的大小，是已初始化的数据大小。</p>
-<p><code>MemSiz</code>就是数据在内存的大小，包含了未初始化的数据。</p>
-<p>.bss 节（未初始化变量）在 ELF
-中是没有分配具体的空间的，只是一个占位符，但最终运行时是需要分配内存空间的，因此<code>FileSiz</code>通常不会大于相应的<code>MemSiz</code>。</p>
-<blockquote>
-<p>为什么需要将 <code>[VirtAddr + FileSiz, VirtAddr + MemSiz)</code>
-对应的物理区间清零?</p>
-</blockquote>
-<p>根据<code>FileSiz</code>和<code>MemSiz</code>的含义，此处清零的意义是将未初始化的数据初始化为0。</p>
-<p>C语言中未初始化的变量默认初始化为0的原因可能正是如此。如果不初始化，可能因为自己不好的码风产生安全问题。</p>
-<blockquote>
-<p>对于批处理系统来说, 系统调用是必须的吗?
-如果直接把AM的API暴露给批处理系统中的程序, 会不会有问题呢?</p>
-</blockquote>
-<p>处于安全性考虑，系统调用是必须的。</p>
-<p>AM的API实现了特定的功能，是硬件功能的封装，提供运行时环境。</p>
-<p>系统调用则对批处理系统的程序使用这些API的权限作出限制，只能对本程序的内存区域进行操作。从软件上限定AM的API的适用范围，保证安全性。</p>
-<blockquote>
-<p><a id="hello程序"></a></p>
-<p>我们知道<code>navy-apps/tests/hello/hello.c</code>只是一个C源文件,
-它会被编译链接成一个ELF文件. 那么, hello程序一开始在哪里?
-它是怎么出现内存中的? 为什么会出现在目前的内存位置?
-它的第一条指令在哪里? 究竟是怎么执行到它的第一条指令的?
-hello程序在不断地打印字符串,
-每一个字符又是经历了什么才会最终出现在终端上?</p>
-</blockquote>
-<p>hello被编译成ELF文件后，我们将它放进了<code>ramdisk.img</code>里。</p>
-<p>接着在<code>nanos-lite</code>的<code>init_proc()</code>函数中调用<code>naive_uload()</code>。在<code>naive_uload()</code>中，首先调用<code>loader</code>函数，从头文件中获得程序要加载的内存位置等信息，将程序加载到正确的内存空间。接着通过调用函数<code>((void(*)())entry) ()</code>开始执行程序的第一条指令。关于<code>((void(*)())entry) ()</code>：</p>
-<ul>
-<li><p><code>entry</code>由<code>loader</code>函数读取ELF头文件得到，代表程序的装载地址，由<code>start.S</code>给出:<code>mv s0, zero;la sp, _stack_pointer</code>。</p></li>
-<li><p>entry
-强制转换为函数指针，其指向的地址为entry,即程序起始地址。调用该函数，相当于跳转到函数指针指向的地址，即程序第一条指令所在的位置。这个手法学习一下。</p>
-<p>接下来开始执行<code>hello</code>程序，程序通过<code>printf</code>输出字符串。<code>printf</code>最终会调用标准输出的<code>_write()</code>，随后触发系统调用<code>sys_write</code>，对于特殊文件<code>stdout</code>调用<code>serial_write</code>，通过<code>putch()</code>函数一个个返回字符。</p>
-<p>在实现堆区管理之前，由于不存在缓冲区，字符会一个一个显示在终端上。当我们实现堆区管理后，调用<code>printf()</code>的时候会通过<code>malloc()</code>申请一片缓冲区，最终的<code>putch()</code>函数返回的字符进入缓冲区，当缓冲区清零的时候，再一并显示在终端上。</p></li>
-</ul>
-<h2 id="文件系统">文件系统</h2>
-<blockquote>
-<p>用<code>fopen()</code>还是<code>open()</code>?</p>
-</blockquote>
-<p><code>open</code>返回文件描述符，<code>fopen</code>返回文件指针。</p>
-<p><code>fopen</code>和<code>open</code>最主要的区别是<code>fopen</code>在用户态下就有了缓存，在进行<code>read</code>和<code>write</code>的时候减少了用户态和内核态的切换，而<code>open</code>则每次都需要进行内核态和用户态的切换；表现为，如果顺序访问文件，<code>fopen</code>系列的函数要比直接调用<code>open</code>系列快；如果随机访问文件<code>open</code>要比<code>fopen</code>快。</p>
-<p>应当用open对字符设备进行操作。</p>
-<blockquote>
-<p>根据屏幕大小和画布大小, 让NDL将图像绘制到屏幕的中央,
-从而获得较好的视觉效果</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> screen_w = <span class="number">0</span>, screen_h = <span class="number">0</span>;<span class="comment">//屏幕大小</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> real_w = <span class="number">0</span>, real_h = <span class="number">0</span>;<span class="comment">//画布大小</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> real_x = <span class="number">0</span>, real_y = <span class="number">0</span>;<span class="comment">//移到中心</span></span><br><span class="line"><span class="comment">//移到中心后的左上角坐标</span></span><br><span class="line">  real_x=(screen_w-real_w)/<span class="number">2</span>;</span><br><span class="line">  real_y=(screen_h-real_h)/<span class="number">2</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="精彩纷呈的应用程序">精彩纷呈的应用程序</h2>
-<blockquote>
-<p><code>fixedpt</code>和<code>float</code>类型的数据都是32位,
-它们都可以表示2^32个不同的数. 但由于表示方法不一样,
-<code>fixedpt</code>和<code>float</code>能表示的数集是不一样的.
-思考一下, 我们用<code>fixedpt</code>来模拟表示<code>float</code>,
-这其中隐含着哪些取舍?</p>
-</blockquote>
-<p><code>fixedpt</code>为32为定点整数，整数部分栈24位，小数部分占8位，可以表示的精度范围为<code>1&gt;&gt;8</code>。</p>
-<p>浮点数的小数点可以移动，数据范围越小，精度越高。</p>
-<p>在我们的<code>pal</code>中数据到小数点后8位精度已经很可以了，因此对精度作出取舍，可以使用<code>fixedpt</code>来模拟表示<code>float</code>。</p>
-<blockquote>
-<p>阅读<code>fixedpt_rconst()</code>的代码, 从表面上看,
-它带有非常明显的浮点操作, 但从编译结果来看却没有任何浮点指令.
-你知道其中的原因吗?</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">define <span class="title function_">fixedpt_rconst</span><span class="params">(R)</span> <span class="params">((fixedpt)((R) * FIXEDPT_ONE + ((R) &gt;= <span class="number">0</span> ? <span class="number">0.5</span> : <span class="number">-0.5</span>)))</span></span><br><span class="line"><span class="comment">//通过四舍五入得到近似的浮点数，其真值落在fixedpt类型可表示的范围中。</span></span><br><span class="line"><span class="comment">//强制类型转换为fixedpt，定义为typedef int32_t fixedpt;</span></span><br><span class="line"><span class="comment">//因此在编译期间进行转换，得到一个近似的定点整数。</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>阅读<code>fixedpt_rconst()</code>的代码, 从表面上看,
-它带有非常明显的浮点操作, 但从编译结果来看却没有任何浮点指令.
-你知道其中的原因吗?</p>
-</blockquote>
-<blockquote>
-<p>假设有一个<code>void *p</code>的指针变量, 它指向了一个32位变量,
-这个变量的本质是<code>float</code>类型,
-它的真值落在<code>fixedpt</code>类型可表示的范围中.
-如果我们定义一个新的函数<code>fixedpt fixedpt_fromfloat(void *p)</code>,
-如何在不引入浮点指令的情况下实现它?</p>
-</blockquote>
-<p>真值落在<code>fixedpt</code>类型可表示的范围中，因此可以先手动把他变成定点小数。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> fixedpt_rconst(R) ((fixedpt)((R) * FIXEDPT_ONE + ((R) &gt;= 0 ? 0.5 : -0.5)))</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> fixedpt_fromint(I) ((fixedptd)(I) &lt;&lt; FIXEDPT_FBITS)</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>bmp-test</code>需要打开一个路径为<code>/share/pictures/projectn.bmp</code>的文件,
-但在Linux native中, 这个路径对应的文件并不存在.
-但我们还是把<code>bmp-test</code>成功运行起来了, 你知道这是如何实现的吗?
-如果你感兴趣, 可以在互联网上搜索<code>LD_PRELOAD</code>相关的内容.</p>
-</blockquote>
-<p><code>makefile</code>文件中有：</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="section">run: app env</span></span><br><span class="line">	@LD_PRELOAD=<span class="variable">$(NAVY_HOME)</span>/libs/libos/build/native.so <span class="variable">$(APP)</span> <span class="variable">$(mainargs)</span></span><br></pre></td></tr></table></figure>
-<p>可见<code>LD_PRELOAD</code>是一个环境变量，在装载C语言运行库之前会先装载<code>LD_PRELOAD</code>指定的共享链接库。在运行native的时候会通过<code>fopen</code>进入正确的文件，再用<code>native</code>的<code>glibc</code>调用。</p>
-<blockquote>
-<p>计算机是个抽象层</p>
-</blockquote>
-<p>自上而下的4个抽象层是“零件”逐步替换的过程。移植测试的过程应该在如下环境依次测试：</p>
-<ul>
-<li>纯粹的Linux native
-<ul>
-<li>保证客户程序的正确性，体现为<code>make run</code>。</li>
-</ul></li>
-<li>Navy中的native
-<ul>
-<li>使用<code>Navy</code>库，用<code>Navy</code>中的库替代<code>Linux native</code>的库，表现为<code>ISA=native</code>。</li>
-<li>如果在这个抽象层出问题，bug可以定位到<code>libdnl/libam/libminiSDL/</code>。</li>
-</ul></li>
-<li>AM中的native
-<ul>
-<li>提供<code>Nanos-lite</code>及其运行时环境，表现为<code>ARCH=native</code>。</li>
-<li>如果在这个抽象层出问题，bug可以定位到<code>Nanos-lite/libos</code>。</li>
-</ul></li>
-<li>NEMU
-<ul>
-<li>用<code>NEMU</code>替代真机硬件,表现为<code>ARCH=riscv32-nemu</code>。</li>
-<li>如果在这个抽象层出问题，bug可以定位到<code>AM</code>和<code>TRM</code>中对于<code>riscv.mk</code>链接的函数的实现，这一部分应当是<code>PA2</code>的内容。</li>
-</ul></li>
-</ul>
-<p><strong>疑问：</strong><a id="疑问"></a></p>
-<p>在完成所有<code>test</code>测试，开始写<code>nslider</code>的时候，在<code>ARCH=riscv32-nemu</code>上<code>fs_read()</code>函数无法正常读取头文件，导致<code>loader()</code>函数装载程序失败；然而在<code>ARCH=native</code>，即<code>am_native</code>上却能正常运行。我一度怀疑是<code>PA2</code>中关于<code>ioe.c</code>的实现有问题，但一直未能解决。于是先在<code>am_native</code>的环境下完成了这些<code>app</code>，但是无法在<code>riscv32-nemu</code>上运行。</p>
-<p>由于执行<code>make ARCH=? update</code>只会更新新的文件，不会移除旧的文件，因此我通过<code>make clean all</code>将<code>file.h</code>清空后重新生成，之后在<code>riscv32-nemu</code>上就能正常运行了。可以确定的是<code>file.h</code>的大小始终不曾超过<code>48M</code>，为什么会出现这个<code>bug</code>以及<code>bug</code>的突然消失还未可知。</p>
-<blockquote>
-<p>仙剑奇侠传的框架是如何工作的?</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (TRUE)&#123;</span><br><span class="line">      <span class="comment">// Load the game resources if needed.</span></span><br><span class="line">      PAL_LoadResources();</span><br><span class="line">      <span class="comment">// Clear the input state of previous frame.</span></span><br><span class="line">      PAL_ClearKeyState();</span><br><span class="line">      <span class="comment">// Wait for the time of one frame. Accept input here.</span></span><br><span class="line">      PAL_DelayUntil(dwTime);</span><br><span class="line">      <span class="type">uint32_t</span> now = SDL_GetTicks();</span><br><span class="line">      UpdateFPS(now);</span><br><span class="line">      <span class="comment">// Set the time of the next frame.</span></span><br><span class="line">      dwTime = now + FRAME_TIME;</span><br><span class="line">      <span class="comment">// Run the main frame routine.</span></span><br><span class="line">      PAL_StartFrame();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在<code>navy-apps/apps/pal/repo/src/game/script.c</code>中有一个<code>PAL_InterpretInstruction()</code>的函数,
-尝试大致了解这个函数的作用和行为. 然后大胆猜测一下,
-仙剑奇侠传的开发者是如何开发这款游戏的?
-你对"游戏引擎"是否有新的认识?</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">PAL_InterpretInstruction(</span><br><span class="line">   WORD           wScriptEntry,<span class="comment">//要执行的脚本条目</span></span><br><span class="line">   WORD           wEventObjectID<span class="comment">//调用脚本的事件对象 ID</span></span><br><span class="line">)</span><br><span class="line">pScript = &amp;(gpGlobals-&gt;g.lprgScriptEntry[wScriptEntry]);</span><br><span class="line"><span class="keyword">switch</span> (pScript-&gt;wOperation)&#123;</span><br><span class="line">        ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个函数里面的内容像是在实现一个“指令集”，每条指令对应游戏的一次逻辑更新，比如角色的移动。开发者在开发仙剑的时候，通过构建这个指令集架构来进行。对于游戏的逻辑更新，可以直接调用对应的<code>wScriptEntry</code>。</p>
-<p>因此我认为，游戏引擎是一种软件框架，类似指令集。游戏引擎是一款游戏所需的所有“逻辑组件”，当游戏需要作出逻辑更新的时候，只需调用这些现成的组件，而不需从头手搓，十分的简便。</p>
-<p>从字面上讲，“引擎”起到的是驱动作用，因此一类游戏（如打斗、FPS）可能拥有同一套引擎，依据这些前人写好的“指令集”，游戏设计者能容易和快速地写出游戏程序，而不用从零开始手搓。</p>
-<p>总而言之，游戏引擎可以避免同类型的逻辑更新重复手搓实现，加快构建游戏的效率。同时，游戏引擎可以做到将同类型游戏的核心功能提炼出来，方便后来者快速做出新游戏或者对原本的游戏引擎进行补充，以扩展其功能。</p>
-<p>一个例子：我们可以利用<code>unity</code>引擎编写动画或游戏。<a
-href="https://unity.com/cn/how-to">Explore Unity’s best practices |
-Unity</a></p>
-<blockquote>
-<p><a id="仙剑奇侠传究竟如何运行"></a></p>
-<p>运行仙剑奇侠传时会播放启动动画, 动画里仙鹤在群山中飞过.
-这一动画是通过<code>navy-apps/apps/pal/repo/src/main.c</code>中的<code>PAL_SplashScreen()</code>函数播放的.
-阅读这一函数,
-可以得知仙鹤的像素信息存放在数据文件<code>mgo.mkf</code>中.
-请回答以下问题:</p>
-<p>库函数, libos, Nanos-lite, AM, NEMU是如何相互协助,
-来帮助仙剑奇侠传的代码从<code>mgo.mkf</code>文件中读出仙鹤的像素信息,
-并且更新到屏幕上?</p>
-<p>换一种PA的经典问法: 这个过程究竟经历了些什么? (Hint:
-合理使用各种trace工具, 可以帮助你更容易地理解仙剑奇侠传的行为)</p>
-</blockquote>
-<p>每一次更新画面，先从<code>mgo.mkf</code>中读取此帧的像素信息，用<code>SDL_BlitSurface()</code>函数填充<code>Surface</code>的缓冲区，最后调用<code>SDL_UpdateRect()</code>更新画面。在<code>SDL_UpdateRect()</code>这个过程中，程序会使用<code>fseek</code>和
-<code>fread</code> 库函数来定位和读取像素信息。<code>fseek</code>和
-<code>fread</code>最终会调用<code>lseek</code> 和 <code>read</code>
-系统调用。</p>
-<p>随后进入<code>NDL_DrawRect()</code>，使用系统调用 <code>lseek</code>
-和 <code>write</code> 打开显存设备文件，往显存里面写入画面数据。</p>
-<p><code>lseek</code> <code>read</code> 和 <code>write</code>
-最终会调用<code>libos</code>中的<code>syscall()</code>函数发起系统调用，然后转移到<code>nanos-lite</code>执行<code>fs_read,fs_write,fs_lseek</code>。</p>
-<p><code>fs_read</code>会调用<code>pal</code>文件的读取函数<code>ramdisk_read()</code>，这个函数中调用了AM
-的函数<code>memcpy()</code>。起初遇到<a
-href="#疑问">这个</a>问题，我以为是发生了内存重叠，<code>ramdisk_read()</code>不应该用<code>memcpy()</code>而是<code>memmove()</code>，但内存并没有重叠，并不是这个问题。</p>
-<p><code>fs_write</code>通过调用显存文件的写函数<code>fb_write()</code>处写入显存，<code>fb_write()</code>调用AM提供的接口<code>io_write()</code>向设备寄存器<code>AM_GPU_FBDRAW</code>写入数据。当<code>NEMU</code>执行到这个写函数时，调用SDL库将画面显示到屏幕上。这是我们<code>PA2</code>实现的内容。</p>
-<p>至此，仙鹤的像素信息显示在屏幕上。</p>
-<blockquote>
-<p>网上流传着一些关于仙剑奇侠传的秘技, 其中的若干条秘技如下:</p>
-<ol type="1">
-<li>很多人到了云姨那里都会去拿三次钱, 其实拿一次就会让钱箱爆满!
-你拿了一次钱就去买剑把钱用到只剩一千多, 然后去道士那里, 先不要上楼,
-去掌柜那里买酒, 多买几次你就会发现钱用不完了.</li>
-<li>不断使用乾坤一掷(钱必须多于五千文)用到财产低于五千文,
-钱会暴增到上限, 如此一来就有用不完的钱了</li>
-<li>当李逍遥等级到达99级时, 用5~10只金蚕王, 经验点又跑出来了,
-而且升级所需经验会变回初期5~10级内的经验值, 然后去打敌人或用金蚕王升级,
-可以学到灵儿的法术(从五气朝元开始); 升到199级后再用5~10只金蚕王,
-经验点再跑出来, 所需升级经验也是很低, 可以学到月如的法术(从一阳指开始);
-到299级后再用10~30只金蚕王, 经验点出来后继续升级,
-可学到阿奴的法术(从万蚁蚀象开始).</li>
-</ol>
-<p>假设这些上述这些秘技并非游戏制作人员的本意,
-请尝试解释这些秘技为什么能生效.</p>
-</blockquote>
-<p>游戏bug，由于变量类型等问题，造成在某些特定情况下，会出现溢出现象。</p>
-<blockquote>
-<p>当你在终端键入<code>./hello</code>运行Hello World程序的时候,
-计算机究竟做了些什么?</p>
-<p>你已经实现了批处理系统, 并且成功通过NTerm来运行其它程序.
-尽管我们的批处理系统经过了诸多简化, 但还是保留了计算机发展史的精髓.
-实现了批处理系统之后, 你对上述的终极拷问有什么新的认识?</p>
-</blockquote>
-<p>在终端键入<code>./hello</code>，shell使用<code>execve</code>系统调用，传入文件名<code>hello</code>和相应的参数和环境变量，由用户态进入内核态。</p>
-<p>通过<code>execve</code>根据指定的文件名寻找文件。如果找不到或者访问权限不够，则返回-1，并执行中断指令。如果找到可执行文件，则用它来代替当前进程的执行映像，接下来调用<code>naive_uload()</code>来加载<code>hello</code>的第一条指令。回到用户程序所在的用户态。</p>
-<p><code>hello</code>程序通过调用<code>printf</code>进行输出，<code>printf</code>最终会调用<code>write</code>系统调用，陷入内核态，调用系统标准输出<code>stdout</code>的输出函数进行输出，首先输出到<code>printf</code>申请的缓冲区当中，当缓冲区清零的时候，一并将这行字符显示在屏幕上。</p>
-<h2 id="补充">补充</h2>
-<h3 id="riscv32-nemu和am_native">riscv32-nemu和am_native</h3>
-<p>在完成所有<code>test</code>测试，开始写<code>nslider</code>的时候，在<code>ARCH=riscv32-nemu</code>上<code>fs_read()</code>函数无法正常读取头文件，导致<code>loader()</code>函数装载程序失败；然而在<code>ARCH=native</code>，即<code>am_native</code>上却能正常运行。我一度怀疑是<code>PA2</code>中关于<code>ioe.c</code>的实现有问题，但一直未能解决。于是先在<code>am_native</code>的环境下完成了这些<code>app</code>，但是无法在<code>riscv32-nemu</code>上运行。</p>
-<p>由于执行<code>make ARCH=? update</code>只会更新新的文件，不会移除旧的文件，因此我通过<code>make clean all</code>将<code>file.h</code>清空后重新生成，之后在<code>riscv32-nemu</code>上就能正常运行了。可以确定的是<code>file.h</code>的大小始终不曾超过<code>48M</code>，为什么会出现这个<code>bug</code>以及<code>bug</code>的突然消失还未可知。</p>
-<h3 id="仙剑奇侠传字幕乱码">仙剑奇侠传字幕乱码</h3>
-<p>起初运行仙剑奇侠传的时候，字幕一行一行显示的时候会显示青绿色的混乱颜色，待字幕完全说完后，真正的字幕才显示出来。</p>
-<p>通过阅读源码，发现在字幕更新的时候会循环调用<code>SDL_BlitSurface()</code>和<code>SDL_UpdateRect()</code>，随后字幕稳定后会调用<code>SDL_UpdateRect()</code>进行图像的保持。在<code>SDL_UpdateRect()</code>中调用了<code>NDL_DrawRect()</code>向屏幕指定矩形位置进行写入像素信息。在其中我特别判断了矩形的越界问题：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//不要越界</span></span><br><span class="line">  <span class="keyword">if</span>(real_h-y&lt;h) h=real_h-y;</span><br><span class="line">  <span class="comment">//一次完全可以写一行</span></span><br><span class="line">  <span class="keyword">if</span>(real_w-x&gt;w) w=real_w-x;</span><br></pre></td></tr></table></figure>
-<p>本意是超出边界的像素及时收手，避免写到画布外面去。当我注释掉这两行越界的判定后，字幕就正常了，暂时还不清楚原因。</p>
-<h3 id="关于nterm和menu的演示">关于nterm和menu的演示</h3>
-<p>演示视频放在云盘上了，链接<a
-href="https://box.nju.edu.cn/f/f80e2438c0244ba3a6f5/">PA3演示</a>。</p>
-<p>可以通过<code>file_nterm_or_menu</code>修改所使用的批处理系统，但是我们的<code>app</code>只有<code>pal</code>有返回操作，因此主要通过<code>pal</code>进行演示。可能由于使用<code>ARCH=riscv32-menu</code>的时钟频率太低，<code>cpu</code>运行速度很慢，因此演示时采用的是<code>ARCH=native</code>。</p>
-<p>通过<code>nterm</code>打开，可以运行各种<code>app</code>，并且运行<code>pal</code>返回后会回到<code>nterm</code>。</p>
-<p>通过<code>menu</code>打开，可以运行各种<code>app</code>，并且运行<code>pal</code>返回后会回到<code>menu</code>。如果在<code>menu</code>中打开<code>nterm</code>，并用<code>nterm</code>运行<code>pal</code>依然会返回到<code>menu</code>。但可以注意到背景色被更新为了白色（原来是黑色）。出于美观，在<code>riscv</code>的<code>ioe.c</code>中给VGA初始化了白色的背景色（native中未变）。</p>
-]]></content>
-      <categories>
-        <category>ICS</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第一章 计算机系统概述</title>
-    <url>/2023/10/25/ICS/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<h1 id="计算机系统概述">计算机系统概述</h1>
-]]></content>
-      <categories>
-        <category>ICS</category>
-      </categories>
-  </entry>
-  <entry>
     <title>第三章 程序转换与机器级表示</title>
     <url>/2023/10/27/ICS/%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%A8%8B%E5%BA%8F%E8%BD%AC%E6%8D%A2%E4%B8%8E%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</url>
-    <content><![CDATA[
-]]></content>
-      <categories>
-        <category>ICS</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>第四章 程序的链接</title>
-    <url>/2023/10/27/ICS/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%93%BE%E6%8E%A5/</url>
     <content><![CDATA[
 ]]></content>
       <categories>
@@ -1264,6 +943,142 @@ A），这样可以避免任何潜在的timing loop问题。</p>
       </categories>
   </entry>
   <entry>
+    <title>Lab7 存储器体系实验</title>
+    <url>/2023/11/15/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab7%20%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB%E5%AE%9E%E9%AA%8C/</url>
+    <content><![CDATA[<hr />
+<h1 id="存储器体系实验">存储器体系实验</h1>
+<ul>
+<li><code>221240083 陈正佺 匡亚明学院</code></li>
+</ul>
+<h3 id="实验整体方案设计">实验整体方案设计</h3>
+<p>我们要利用4片8位64KB的RAM级联成一个32位256KB的存储器。由4个8位存储器构成32位的存储器，4个8位分别为32位的4个字节。因此只需在读取时控制相应的片选信号即可。</p>
+<p>通过Memop可以控制读取或存取的是1,2,4字节，
+但控制不了到底是第几个字节，因此需要使用地址的低两位来判断到底存取的是那个字节位。</p>
+<p>这样就利用8位级联构成了32位。接下来要考虑的是复位清零的问题。我们会在子模块设计里面详细介绍。</p>
+<p>最后要实现顶层模块，将读出的32位数据展示在FPGA板上，这个我们已经实现多次，这里类似实现即可。</p>
+<h3 id="子模块设计">子模块设计</h3>
+<blockquote>
+<p><code>32位mem模块</code></p>
+</blockquote>
+<p>对8位的mem模块调用4次。但是与讲义里给的不同，这里添加了低两位的地址，实现了任意字节的读取和存放。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> (&#123;MemOp,addr[<span class="number">1</span>:<span class="number">0</span>]&#125;)</span><br><span class="line"> <span class="number">5&#x27;b01000</span>: <span class="keyword">begin</span> dataout = outtmp; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b10000</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">24&#x27;h000000</span>, outtmp[<span class="number">7</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b10001</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">24&#x27;h000000</span>, outtmp[<span class="number">15</span>:<span class="number">8</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b10010</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">24&#x27;h000000</span>, outtmp[<span class="number">23</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b10011</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">24&#x27;h000000</span>, outtmp[<span class="number">31</span>:<span class="number">24</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b10100</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">16&#x27;h0000</span>, outtmp[<span class="number">15</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b10110</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">16&#x27;h0000</span>, outtmp[<span class="number">31</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b00000</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">24</span>&#123;outtmp[<span class="number">7</span>]&#125;&#125;, outtmp[<span class="number">7</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00001</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">24</span>&#123;outtmp[<span class="number">15</span>]&#125;&#125;, outtmp[<span class="number">15</span>:<span class="number">8</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00010</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">24</span>&#123;outtmp[<span class="number">23</span>]&#125;&#125;, outtmp[<span class="number">23</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00011</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">24</span>&#123;outtmp[<span class="number">31</span>]&#125;&#125;, outtmp[<span class="number">31</span>:<span class="number">24</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b00100</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">16</span>&#123;outtmp[<span class="number">15</span>]&#125;&#125;, outtmp[<span class="number">15</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00110</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">16</span>&#123;outtmp[<span class="number">31</span>]&#125;&#125;, outtmp[<span class="number">31</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">default</span>:dataout = outtmp;</span><br><span class="line"> <span class="keyword">endcase</span></span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">begin</span> </span><br><span class="line"> <span class="keyword">case</span> (&#123;MemOp,addr[<span class="number">1</span>:<span class="number">0</span>]&#125;)</span><br><span class="line"> <span class="number">5&#x27;b01000</span>: <span class="keyword">begin</span> intmp = datain; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b00000</span>: <span class="keyword">begin</span> intmp = &#123;outtmp[<span class="number">31</span>:<span class="number">8</span>], datain[<span class="number">7</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00001</span>: <span class="keyword">begin</span> intmp = &#123;outtmp[<span class="number">31</span>:<span class="number">16</span>], datain[<span class="number">15</span>:<span class="number">8</span>],outtmp[<span class="number">7</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00010</span>: <span class="keyword">begin</span> intmp = &#123;outtmp[<span class="number">31</span>:<span class="number">24</span>], datain[<span class="number">23</span>:<span class="number">16</span>],outtmp[<span class="number">15</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00011</span>: <span class="keyword">begin</span> intmp = &#123;datain[<span class="number">31</span>:<span class="number">24</span>],outtmp[<span class="number">23</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b00100</span>: <span class="keyword">begin</span> intmp = &#123;outtmp[<span class="number">31</span>:<span class="number">16</span>], datain[<span class="number">15</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00110</span>: <span class="keyword">begin</span> intmp = &#123;datain[<span class="number">15</span>:<span class="number">0</span>],outtmp[<span class="number">31</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="keyword">default</span>:intmp = datain;</span><br><span class="line"> <span class="keyword">endcase</span></span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>复位清零模块</code></p>
+</blockquote>
+<p>设计1个16倒计时，每毫秒清除1个存储器，就可以在16ms的时间内实现复位清零。一旦按下<code>BTNC</code>,就会开始清零，直到计数器变为0，此时进入允许写入的状态。</p>
+<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">	<span class="keyword">reg</span> [<span class="number">15</span>:<span class="number">0</span>] countdown;</span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> msclk <span class="keyword">or</span> <span class="keyword">posedge</span> BTNC)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(BTNC)<span class="keyword">begin</span></span><br><span class="line">        countdown &lt;= <span class="number">16&#x27;d16</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(countdown != <span class="number">0</span>)<span class="keyword">begin</span></span><br><span class="line">        countdown &lt;= countdown - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">15</span>:<span class="number">0</span>] true_addr = &#123;<span class="number">12&#x27;b0</span>, addr_L4b&#125;;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>] true_datain = &#123;datain_L8b, datain_L8b, datain_L8b, datain_L8b&#125;;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">15</span>:<span class="number">0</span>] final_addr = (countdown == <span class="number">0</span>) ? true_addr : countdown-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>] final_datain = (countdown == <span class="number">0</span>) ? true_datain : <span class="number">32&#x27;d0</span>;</span><br><span class="line">    <span class="keyword">wire</span> final_we = (countdown == <span class="number">0</span>) ? we : <span class="number">1&#x27;b1</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>顶层模块</code></p>
+</blockquote>
+<p>利用分频器和七段码进行显示。</p>
+<h3 id="fpga验证">FPGA验证</h3>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231117164004104.png" alt="image-20231117164004104" style="zoom:42%;" /></p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231117164021897.png" alt="image-20231117164021897" style="zoom:46%;" /></p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231117164035046.png" alt="image-20231117164035046" style="zoom:50%;" /></p>
+<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231117164109107.png" alt="image-20231117164109107" style="zoom:46%;" /></p>
+<h3 id="错误现象及分析">错误现象及分析</h3>
+<p>通过Memop可以控制读取或存取的是1,2,4字节，
+但控制不了到底是第几个字节，因此需要使用地址的低两位来判断到底存取的是那个字节位。</p>
+<p>Memop和地址的低两位结合起来确定具体的存取字节。这样的设计可以有效地对齐存储，确保按照地址的低两位进行存取时，只能存取到相应的字节位置。这也符合计算机体系结构中的字节对齐原则。由于按地址对齐进行存储，因此存取两位字节时，只能存取在12位或者34位，不会出现存取在23位的情况。</p>
+<h3 id="思考题">思考题</h3>
+<blockquote>
+<p>分别采用分布式<code>RAM</code>和块<code>RAM</code>实现存储器，通过仿真程序分析异步读和同步读的时序状态。</p>
+</blockquote>
+<ul>
+<li>分布式RAM：</li>
+</ul>
+<ol type="1">
+<li><strong>异步读时序状态分析：</strong>
+<ul>
+<li>发起读请求：输入读地址并激活读使能信号。</li>
+<li>地址解码：将读地址解码为多个子模块的地址。</li>
+<li>数据获取：各个子模块独立地获取数据。</li>
+<li>数据汇总：将从各个子模块获取的数据进行汇总。</li>
+<li>输出数据：输出给用户。</li>
+</ul></li>
+<li><strong>同步读时序状态分析：</strong>
+<ul>
+<li>发起读请求：输入读地址并激活读使能信号。</li>
+<li>地址解码：将读地址解码为多个子模块的地址。</li>
+<li>数据获取：各个子模块同时获取数据。</li>
+<li>数据汇总：将同时获取的数据进行汇总。</li>
+<li>输出数据：输出给用户。</li>
+</ul></li>
+</ol>
+<ul>
+<li>块RAM：</li>
+</ul>
+<ol type="1">
+<li><strong>异步读时序状态分析：</strong>
+<ul>
+<li>发起读请求：输入读地址并激活读使能信号。</li>
+<li>地址解码：将读地址解码为块RAM中的特定块。</li>
+<li>数据获取：块RAM读取整个块中的数据。</li>
+<li>输出数据：输出给用户。</li>
+</ul></li>
+<li><strong>同步读时序状态分析：</strong>
+<ul>
+<li>发起读请求：输入读地址并激活读使能信号。</li>
+<li>地址解码：将读地址解码为块RAM中的特定块。</li>
+<li>数据获取：块RAM同时获取整个块中的数据。</li>
+<li>输出数据：输出给用户。</li>
+</ul></li>
+</ol>
+<ul>
+<li><p>异步读和同步读的比较：</p></li>
+<li><p><strong>异步读：</strong></p>
+<ul>
+<li>优点：更简单，对于一些低速应用可能更适用。</li>
+<li>缺点：时序可能不太容易控制，因为各个子模块独立地响应请求。</li>
+</ul></li>
+<li><p><strong>同步读：</strong></p>
+<ul>
+<li>优点：时序更容易控制，适用于高速应用。</li>
+<li>缺点：设计和实现可能相对复杂。</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>分析<code>Cache</code>大小对命中率的影响。</p>
+</blockquote>
+<p>命中率是指在程序执行过程中，CPU从缓存中成功找到所需数据的比例。高命中率通常表示程序能够有效地利用缓存，减少了对主内存的访问，从而提高了性能。以下是对命中率影响因素的更详细分析：</p>
+<ol type="1">
+<li><strong>Cache大小：</strong>
+较大的Cache可以容纳更多的数据块，提高了可能命中的数据量。这通常导致更高的命中率，尤其是对于具有良好局部性的程序。然而，过大的Cache也可能导致性能下降，因为查找更多数据可能需要更长的时间。</li>
+<li><strong>空间局部性：</strong>
+空间局部性是指程序倾向于访问临近地址的数据。如果程序在一段时间内访问了某个地址，那么这个地址附近的数据可能会被加载到Cache中，提高了命中率。</li>
+<li><strong>时间局部性：</strong>
+时间局部性是指程序在一段时间内多次访问相同的数据。如果程序反复访问某个数据块，那么这个数据块可能一直驻留在Cache中，增加了命中率。</li>
+<li><strong>缓存置换策略：</strong>
+缓存中的数据块有限，当新的数据需要加载到Cache而没有足够的空间时，就需要进行缓存置换。不同的置换策略（如LRU、FIFO等）对命中率有不同的影响。</li>
+<li><strong>缓存关联度：</strong>
+Cache的关联度指的是某一组相邻地址映射到Cache的相同组。关联度较高的Cache有更好的空间局部性，因为相邻地址通常映射到相同的Cache组，提高了命中率。</li>
+<li><strong>程序访存模式：</strong>
+程序的访存模式对命中率也有影响。顺序访存和随机访存的程序可能有不同的命中率表现，因为不同的访存模式可能导致不同的局部性。</li>
+</ol>
+<p>总体而言，理解并优化这些因素对于提高命中率至关重要。在实际的系统设计中，通常通过模拟、分析和实验来确定最佳的Cache配置，以在性能和硬件成本之间找到平衡。</p>
+<blockquote>
+<p>当指令<code>Cache</code>和数据<code>Cache</code>独立实现时，如何设计顶层<code>Cache</code>的有限状态机。</p>
+</blockquote>
+<p>理论上，一个顶层Cache的有限状态机（FSM）可以有以下几个状态和转换：</p>
+<ol type="1">
+<li><strong>Idle（空闲状态）</strong>:
+初始状态，等待CPU的访问请求。此状态可以分为读请求和写请求两种情况。</li>
+<li><strong>ReadMiss（读缺失状态）</strong>:
+当CPU发起一个读请求时，顶层Cache会检查是否存在缓存命中。如果缓存未命中，则进入该状态，等待从主内存读取所需的数据。</li>
+<li><strong>WriteMiss（写缺失状态）</strong>:
+当CPU发起一个写请求时，顶层Cache会检查是否存在缓存命中。如果缓存未命中，则进入该状态，等待从主内存读取所需的数据，并执行写操作。</li>
+<li><strong>WriteBack（写回状态）</strong>:
+当Cache中的一个缓存块被替换时，如果该缓存块需要写回主内存，则进入该状态，等待将被替换的数据写回主内存。</li>
+<li><strong>AccessComplete（访问完成状态）</strong>:
+当读缺失状态或写缺失状态中的数据读取完成，或者写回状态中的数据写回主内存完成时，Cache会进入该状态，并将请求的数据返回给CPU。</li>
+</ol>
+<p>通过在状态之间进行转换，Cache能够根据CPU的访问请求进行相应的操作，从而提供数据的快速访问，以提高命中率和整体性能。</p>
+]]></content>
+      <categories>
+        <category>数电实验</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Lab8 单周期CPU设计</title>
     <url>/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</url>
     <content><![CDATA[<h1 id="单周期cpu设计实验报告">单周期CPU设计实验报告</h1>
@@ -1528,142 +1343,6 @@ USTC CECS 2023</a></p>
 <h4 id="arm119段">ARM11(9段)</h4>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205112646728.png" alt="image-20231205112646728" style="zoom:53%;" /></p>
 <p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231205112728068.png" alt="image-20231205112728068" style="zoom:67%;" /></p>
-]]></content>
-      <categories>
-        <category>数电实验</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Lab7 存储器体系实验</title>
-    <url>/2023/11/15/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab7%20%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB%E5%AE%9E%E9%AA%8C/</url>
-    <content><![CDATA[<hr />
-<h1 id="存储器体系实验">存储器体系实验</h1>
-<ul>
-<li><code>221240083 陈正佺 匡亚明学院</code></li>
-</ul>
-<h3 id="实验整体方案设计">实验整体方案设计</h3>
-<p>我们要利用4片8位64KB的RAM级联成一个32位256KB的存储器。由4个8位存储器构成32位的存储器，4个8位分别为32位的4个字节。因此只需在读取时控制相应的片选信号即可。</p>
-<p>通过Memop可以控制读取或存取的是1,2,4字节，
-但控制不了到底是第几个字节，因此需要使用地址的低两位来判断到底存取的是那个字节位。</p>
-<p>这样就利用8位级联构成了32位。接下来要考虑的是复位清零的问题。我们会在子模块设计里面详细介绍。</p>
-<p>最后要实现顶层模块，将读出的32位数据展示在FPGA板上，这个我们已经实现多次，这里类似实现即可。</p>
-<h3 id="子模块设计">子模块设计</h3>
-<blockquote>
-<p><code>32位mem模块</code></p>
-</blockquote>
-<p>对8位的mem模块调用4次。但是与讲义里给的不同，这里添加了低两位的地址，实现了任意字节的读取和存放。</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> (&#123;MemOp,addr[<span class="number">1</span>:<span class="number">0</span>]&#125;)</span><br><span class="line"> <span class="number">5&#x27;b01000</span>: <span class="keyword">begin</span> dataout = outtmp; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b10000</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">24&#x27;h000000</span>, outtmp[<span class="number">7</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b10001</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">24&#x27;h000000</span>, outtmp[<span class="number">15</span>:<span class="number">8</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b10010</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">24&#x27;h000000</span>, outtmp[<span class="number">23</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b10011</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">24&#x27;h000000</span>, outtmp[<span class="number">31</span>:<span class="number">24</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b10100</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">16&#x27;h0000</span>, outtmp[<span class="number">15</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b10110</span>: <span class="keyword">begin</span> dataout = &#123;<span class="number">16&#x27;h0000</span>, outtmp[<span class="number">31</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b00000</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">24</span>&#123;outtmp[<span class="number">7</span>]&#125;&#125;, outtmp[<span class="number">7</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00001</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">24</span>&#123;outtmp[<span class="number">15</span>]&#125;&#125;, outtmp[<span class="number">15</span>:<span class="number">8</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00010</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">24</span>&#123;outtmp[<span class="number">23</span>]&#125;&#125;, outtmp[<span class="number">23</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00011</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">24</span>&#123;outtmp[<span class="number">31</span>]&#125;&#125;, outtmp[<span class="number">31</span>:<span class="number">24</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b00100</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">16</span>&#123;outtmp[<span class="number">15</span>]&#125;&#125;, outtmp[<span class="number">15</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00110</span>: <span class="keyword">begin</span> dataout = &#123;&#123;<span class="number">16</span>&#123;outtmp[<span class="number">31</span>]&#125;&#125;, outtmp[<span class="number">31</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">default</span>:dataout = outtmp;</span><br><span class="line"> <span class="keyword">endcase</span></span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"> <span class="keyword">else</span> <span class="keyword">begin</span> </span><br><span class="line"> <span class="keyword">case</span> (&#123;MemOp,addr[<span class="number">1</span>:<span class="number">0</span>]&#125;)</span><br><span class="line"> <span class="number">5&#x27;b01000</span>: <span class="keyword">begin</span> intmp = datain; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b00000</span>: <span class="keyword">begin</span> intmp = &#123;outtmp[<span class="number">31</span>:<span class="number">8</span>], datain[<span class="number">7</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00001</span>: <span class="keyword">begin</span> intmp = &#123;outtmp[<span class="number">31</span>:<span class="number">16</span>], datain[<span class="number">15</span>:<span class="number">8</span>],outtmp[<span class="number">7</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00010</span>: <span class="keyword">begin</span> intmp = &#123;outtmp[<span class="number">31</span>:<span class="number">24</span>], datain[<span class="number">23</span>:<span class="number">16</span>],outtmp[<span class="number">15</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00011</span>: <span class="keyword">begin</span> intmp = &#123;datain[<span class="number">31</span>:<span class="number">24</span>],outtmp[<span class="number">23</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"> <span class="number">5&#x27;b00100</span>: <span class="keyword">begin</span> intmp = &#123;outtmp[<span class="number">31</span>:<span class="number">16</span>], datain[<span class="number">15</span>:<span class="number">0</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="number">5&#x27;b00110</span>: <span class="keyword">begin</span> intmp = &#123;datain[<span class="number">15</span>:<span class="number">0</span>],outtmp[<span class="number">31</span>:<span class="number">16</span>]&#125;; <span class="keyword">end</span></span><br><span class="line"> <span class="keyword">default</span>:intmp = datain;</span><br><span class="line"> <span class="keyword">endcase</span></span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>复位清零模块</code></p>
-</blockquote>
-<p>设计1个16倒计时，每毫秒清除1个存储器，就可以在16ms的时间内实现复位清零。一旦按下<code>BTNC</code>,就会开始清零，直到计数器变为0，此时进入允许写入的状态。</p>
-<figure class="highlight verilog"><table><tr><td class="code"><pre><span class="line">	<span class="keyword">reg</span> [<span class="number">15</span>:<span class="number">0</span>] countdown;</span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> msclk <span class="keyword">or</span> <span class="keyword">posedge</span> BTNC)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(BTNC)<span class="keyword">begin</span></span><br><span class="line">        countdown &lt;= <span class="number">16&#x27;d16</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(countdown != <span class="number">0</span>)<span class="keyword">begin</span></span><br><span class="line">        countdown &lt;= countdown - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">15</span>:<span class="number">0</span>] true_addr = &#123;<span class="number">12&#x27;b0</span>, addr_L4b&#125;;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>] true_datain = &#123;datain_L8b, datain_L8b, datain_L8b, datain_L8b&#125;;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">15</span>:<span class="number">0</span>] final_addr = (countdown == <span class="number">0</span>) ? true_addr : countdown-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>] final_datain = (countdown == <span class="number">0</span>) ? true_datain : <span class="number">32&#x27;d0</span>;</span><br><span class="line">    <span class="keyword">wire</span> final_we = (countdown == <span class="number">0</span>) ? we : <span class="number">1&#x27;b1</span>;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>顶层模块</code></p>
-</blockquote>
-<p>利用分频器和七段码进行显示。</p>
-<h3 id="fpga验证">FPGA验证</h3>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231117164004104.png" alt="image-20231117164004104" style="zoom:42%;" /></p>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231117164021897.png" alt="image-20231117164021897" style="zoom:46%;" /></p>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231117164035046.png" alt="image-20231117164035046" style="zoom:50%;" /></p>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231117164109107.png" alt="image-20231117164109107" style="zoom:46%;" /></p>
-<h3 id="错误现象及分析">错误现象及分析</h3>
-<p>通过Memop可以控制读取或存取的是1,2,4字节，
-但控制不了到底是第几个字节，因此需要使用地址的低两位来判断到底存取的是那个字节位。</p>
-<p>Memop和地址的低两位结合起来确定具体的存取字节。这样的设计可以有效地对齐存储，确保按照地址的低两位进行存取时，只能存取到相应的字节位置。这也符合计算机体系结构中的字节对齐原则。由于按地址对齐进行存储，因此存取两位字节时，只能存取在12位或者34位，不会出现存取在23位的情况。</p>
-<h3 id="思考题">思考题</h3>
-<blockquote>
-<p>分别采用分布式<code>RAM</code>和块<code>RAM</code>实现存储器，通过仿真程序分析异步读和同步读的时序状态。</p>
-</blockquote>
-<ul>
-<li>分布式RAM：</li>
-</ul>
-<ol type="1">
-<li><strong>异步读时序状态分析：</strong>
-<ul>
-<li>发起读请求：输入读地址并激活读使能信号。</li>
-<li>地址解码：将读地址解码为多个子模块的地址。</li>
-<li>数据获取：各个子模块独立地获取数据。</li>
-<li>数据汇总：将从各个子模块获取的数据进行汇总。</li>
-<li>输出数据：输出给用户。</li>
-</ul></li>
-<li><strong>同步读时序状态分析：</strong>
-<ul>
-<li>发起读请求：输入读地址并激活读使能信号。</li>
-<li>地址解码：将读地址解码为多个子模块的地址。</li>
-<li>数据获取：各个子模块同时获取数据。</li>
-<li>数据汇总：将同时获取的数据进行汇总。</li>
-<li>输出数据：输出给用户。</li>
-</ul></li>
-</ol>
-<ul>
-<li>块RAM：</li>
-</ul>
-<ol type="1">
-<li><strong>异步读时序状态分析：</strong>
-<ul>
-<li>发起读请求：输入读地址并激活读使能信号。</li>
-<li>地址解码：将读地址解码为块RAM中的特定块。</li>
-<li>数据获取：块RAM读取整个块中的数据。</li>
-<li>输出数据：输出给用户。</li>
-</ul></li>
-<li><strong>同步读时序状态分析：</strong>
-<ul>
-<li>发起读请求：输入读地址并激活读使能信号。</li>
-<li>地址解码：将读地址解码为块RAM中的特定块。</li>
-<li>数据获取：块RAM同时获取整个块中的数据。</li>
-<li>输出数据：输出给用户。</li>
-</ul></li>
-</ol>
-<ul>
-<li><p>异步读和同步读的比较：</p></li>
-<li><p><strong>异步读：</strong></p>
-<ul>
-<li>优点：更简单，对于一些低速应用可能更适用。</li>
-<li>缺点：时序可能不太容易控制，因为各个子模块独立地响应请求。</li>
-</ul></li>
-<li><p><strong>同步读：</strong></p>
-<ul>
-<li>优点：时序更容易控制，适用于高速应用。</li>
-<li>缺点：设计和实现可能相对复杂。</li>
-</ul></li>
-</ul>
-<blockquote>
-<p>分析<code>Cache</code>大小对命中率的影响。</p>
-</blockquote>
-<p>命中率是指在程序执行过程中，CPU从缓存中成功找到所需数据的比例。高命中率通常表示程序能够有效地利用缓存，减少了对主内存的访问，从而提高了性能。以下是对命中率影响因素的更详细分析：</p>
-<ol type="1">
-<li><strong>Cache大小：</strong>
-较大的Cache可以容纳更多的数据块，提高了可能命中的数据量。这通常导致更高的命中率，尤其是对于具有良好局部性的程序。然而，过大的Cache也可能导致性能下降，因为查找更多数据可能需要更长的时间。</li>
-<li><strong>空间局部性：</strong>
-空间局部性是指程序倾向于访问临近地址的数据。如果程序在一段时间内访问了某个地址，那么这个地址附近的数据可能会被加载到Cache中，提高了命中率。</li>
-<li><strong>时间局部性：</strong>
-时间局部性是指程序在一段时间内多次访问相同的数据。如果程序反复访问某个数据块，那么这个数据块可能一直驻留在Cache中，增加了命中率。</li>
-<li><strong>缓存置换策略：</strong>
-缓存中的数据块有限，当新的数据需要加载到Cache而没有足够的空间时，就需要进行缓存置换。不同的置换策略（如LRU、FIFO等）对命中率有不同的影响。</li>
-<li><strong>缓存关联度：</strong>
-Cache的关联度指的是某一组相邻地址映射到Cache的相同组。关联度较高的Cache有更好的空间局部性，因为相邻地址通常映射到相同的Cache组，提高了命中率。</li>
-<li><strong>程序访存模式：</strong>
-程序的访存模式对命中率也有影响。顺序访存和随机访存的程序可能有不同的命中率表现，因为不同的访存模式可能导致不同的局部性。</li>
-</ol>
-<p>总体而言，理解并优化这些因素对于提高命中率至关重要。在实际的系统设计中，通常通过模拟、分析和实验来确定最佳的Cache配置，以在性能和硬件成本之间找到平衡。</p>
-<blockquote>
-<p>当指令<code>Cache</code>和数据<code>Cache</code>独立实现时，如何设计顶层<code>Cache</code>的有限状态机。</p>
-</blockquote>
-<p>理论上，一个顶层Cache的有限状态机（FSM）可以有以下几个状态和转换：</p>
-<ol type="1">
-<li><strong>Idle（空闲状态）</strong>:
-初始状态，等待CPU的访问请求。此状态可以分为读请求和写请求两种情况。</li>
-<li><strong>ReadMiss（读缺失状态）</strong>:
-当CPU发起一个读请求时，顶层Cache会检查是否存在缓存命中。如果缓存未命中，则进入该状态，等待从主内存读取所需的数据。</li>
-<li><strong>WriteMiss（写缺失状态）</strong>:
-当CPU发起一个写请求时，顶层Cache会检查是否存在缓存命中。如果缓存未命中，则进入该状态，等待从主内存读取所需的数据，并执行写操作。</li>
-<li><strong>WriteBack（写回状态）</strong>:
-当Cache中的一个缓存块被替换时，如果该缓存块需要写回主内存，则进入该状态，等待将被替换的数据写回主内存。</li>
-<li><strong>AccessComplete（访问完成状态）</strong>:
-当读缺失状态或写缺失状态中的数据读取完成，或者写回状态中的数据写回主内存完成时，Cache会进入该状态，并将请求的数据返回给CPU。</li>
-</ol>
-<p>通过在状态之间进行转换，Cache能够根据CPU的访问请求进行相应的操作，从而提供数据的快速访问，以提高命中率和整体性能。</p>
 ]]></content>
       <categories>
         <category>数电实验</category>
