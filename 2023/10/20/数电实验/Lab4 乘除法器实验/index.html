@@ -1,323 +1,0 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Lab4 乘除法器实验 | ECHO_1103</title><meta name="author" content="ECHO"><meta name="copyright" content="ECHO"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="乘除法器实验  221240083 陈正佺  补码一位乘法器 实验整体方案设计  子模块  应调用ALU和选择器模块。 仿真测试  由仿真结果可知设计成功。 错误现象及分析 未出现错误。 快速乘法器 实验整体方案设计  依据8*8阵列乘法器的原理，类似的得出32*32阵列乘法器。 子模块 主要通过循环进位的方式得到结果。 1234567891011for(">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Lab4 乘除法器实验">
-<meta property="og:url" content="https://expelli-armus.github.io/2023/10/20/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab4%20%E4%B9%98%E9%99%A4%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C/index.html">
-<meta property="og:site_name" content="ECHO_1103">
-<meta property="og:description" content="乘除法器实验  221240083 陈正佺  补码一位乘法器 实验整体方案设计  子模块  应调用ALU和选择器模块。 仿真测试  由仿真结果可知设计成功。 错误现象及分析 未出现错误。 快速乘法器 实验整体方案设计  依据8*8阵列乘法器的原理，类似的得出32*32阵列乘法器。 子模块 主要通过循环进位的方式得到结果。 1234567891011for(">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://expelli-armus.github.io/img/avatar.png">
-<meta property="article:published_time" content="2023-10-20T02:15:22.989Z">
-<meta property="article:modified_time" content="2023-11-17T08:59:22.349Z">
-<meta property="article:author" content="ECHO">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://expelli-armus.github.io/img/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://expelli-armus.github.io/2023/10/20/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab4%20%E4%B9%98%E9%99%A4%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
-  root: '/',
-  algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  date_suffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'fancybox',
-  Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
-  },
-  isPhotoFigcaption: false,
-  islazyload: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  }
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'Lab4 乘除法器实验',
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: false,
-  isToc: true,
-  postUpdate: '2023-11-17 16:59:22'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = url => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      link.onload = () => resolve()
-      link.onerror = () => reject()
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ECHO_1103"><span class="site-name">ECHO_1103</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fa fa-comments-o"></i><span> 分享</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 影视</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Lab4 乘除法器实验</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-20T02:15:22.989Z" title="发表于 2023-10-20 10:15:22">2023-10-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-17T08:59:22.349Z" title="更新于 2023-11-17 16:59:22">2023-11-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/">数电实验</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Lab4 乘除法器实验"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="乘除法器实验">乘除法器实验</h1>
-<ul>
-<li>221240083 陈正佺</li>
-</ul>
-<h2 id="补码一位乘法器">补码一位乘法器</h2>
-<h3 id="实验整体方案设计">实验整体方案设计</h3>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020101120884.png" alt="image-20231020101120884" style="zoom:50%;" /></p>
-<h3 id="子模块">子模块</h3>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020101221534.png" alt="image-20231020101221534" style="zoom:50%;" /></p>
-<p>应调用ALU和选择器模块。</p>
-<h3 id="仿真测试">仿真测试</h3>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020101848095.png" alt="image-20231020101848095" style="zoom:50%;" /></p>
-<p>由仿真结果可知设计成功。</p>
-<h3 id="错误现象及分析">错误现象及分析</h3>
-<p>未出现错误。</p>
-<h2 id="快速乘法器">快速乘法器</h2>
-<h3 id="实验整体方案设计-1">实验整体方案设计</h3>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020102239659.png" alt="image-20231020102239659" style="zoom:30%;" /></p>
-<p>依据8*8阵列乘法器的原理，类似的得出32*32阵列乘法器。</p>
-<h3 id="子模块-1">子模块</h3>
-<p>主要通过循环进位的方式得到结果。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=<span class="number">32</span>;i=i+<span class="number">1</span>)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">32</span>;j=j+<span class="number">1</span>)<span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(i!=<span class="number">7&#x27;d32</span>)<span class="keyword">begin</span></span><br><span class="line">            b[j+i+<span class="number">1</span>]=(X[i]&amp;Y[j]&amp;a[j+i])|(X[i]&amp;Y[j]&amp;b[j+i])|(a[j+i]&amp;b[j+i]);</span><br><span class="line">            a[j+i]=(X[i]&amp;Y[j])^a[j+i]^b[j+i];<span class="keyword">end</span></span><br><span class="line">         <span class="keyword">if</span>(i==<span class="number">7&#x27;d32</span>)<span class="keyword">begin</span></span><br><span class="line">             b[j+i+<span class="number">1</span>]=(a[j+i]&amp;b[j+i]);</span><br><span class="line">             a[j+i]=a[j+i]^b[j+i];</span><br><span class="line">         <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="仿真测试-1">仿真测试</h3>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020102855309.png" alt="image-20231020102855309" style="zoom:50%;" /></p>
-<h3 id="错误现象及分析-1">错误现象及分析</h3>
-<p>注意最后一行进位时用到的是已经更新后的进位。为了方便，我们将其视为33*32位的乘法，即在其中一个的前面补0，这样循环运行到最后一行的时候才不会出错。</p>
-<h2 id="补码除法器">补码除法器</h2>
-<h3 id="实验整体方案设计-2">实验整体方案设计</h3>
-<p>被除数与除数同号做减法，异号做加法。接着判断余数符号是否改变，若改变则Q置1，否则置0。</p>
-<p>重复上述操作直至循环结束。</p>
-<p>最后分别判断除数和余数与被除数是否同号来进行商和余数的修正。</p>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020103838394.png" alt="image-20231020103838394" style="zoom:50%;" /></p>
-<h3 id="子模块-2">子模块</h3>
-<p>循环判断是否够减。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(start)<span class="keyword">begin</span></span><br><span class="line">            reg_r&lt;=<span class="number">32&#x27;b0</span>;</span><br><span class="line">            r_sign&lt;=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(dividend[<span class="number">31</span>]==<span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">                reg_q&lt;=~dividend+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">else</span> reg_q&lt;=dividend;</span><br><span class="line">            <span class="keyword">if</span>(divisor[<span class="number">31</span>]==<span class="number">1</span>)<span class="keyword">begin</span></span><br><span class="line">                reg_b&lt;=~divisor+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">else</span> reg_b&lt;=divisor;</span><br><span class="line">            count&lt;=<span class="number">0</span>;</span><br><span class="line">            busy&lt;=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(busy)<span class="keyword">begin</span></span><br><span class="line">            reg_r&lt;=sub_add[<span class="number">31</span>:<span class="number">0</span>];</span><br><span class="line">            r_sign&lt;=sub_add[<span class="number">32</span>];</span><br><span class="line">            reg_q&lt;=&#123;reg_q[<span class="number">30</span>:<span class="number">0</span>],~sub_add[<span class="number">32</span>]&#125;;</span><br><span class="line">            count&lt;=count+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(count==<span class="number">31</span>)busy&lt;=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="错误现象及分析-2">错误现象及分析</h3>
-<p>未出现错误。</p>
-<h2 id="rv32m指令实现">RV32M指令实现</h2>
-<h3 id="实验整体方案设计-3">实验整体方案设计</h3>
-<p>实现以下功能，只需利用已有的乘除法器，其中有符号数与无符号数的运算结果为有符号数。</p>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020104310411.png" alt="image-20231020104310411" style="zoom:50%;" /></p>
-<h3 id="子模块-3">子模块</h3>
-<p>调用乘法器和除法器并用多路选择器来控制当前的功能。</p>
-<p>为了可以在开发板上验证，创建父级模块使按键与开发板上的按键数量匹配。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">.rs1</span>(&#123;<span class="number">8</span>&#123;x[<span class="number">3</span>:<span class="number">0</span>]&#125;&#125;),</span><br><span class="line"><span class="variable">.rs2</span>(&#123;<span class="number">8</span>&#123;y[<span class="number">3</span>:<span class="number">0</span>]&#125;&#125;)</span><br></pre></td></tr></table></figure>
-<p>特别注意判in_error的情况，只要funct3$$4,且rs2为0，则会进行除0的操作，此时in_error为1。</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(rs2==<span class="number">32&#x27;b0</span>&amp;&amp;funct3&gt;=<span class="number">3&#x27;d4</span>)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">	in_error=<span class="number">1</span>;out_valid=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h3 id="开发板验证">开发板验证</h3>
-<p>考虑以下这组数据。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a=<span class="number">0x55555555</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> a_1=<span class="number">0x55555555</span>;</span><br><span class="line">    <span class="type">int</span> b=<span class="number">0xcccccccc</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> b_1=<span class="number">0xcccccccc</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> c=(<span class="type">long</span> <span class="type">long</span>)a*(<span class="type">long</span> <span class="type">long</span>)b;c=c&gt;&gt;<span class="number">32</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> d=(<span class="type">long</span> <span class="type">long</span>)a*(<span class="type">long</span> <span class="type">long</span>)b_1;d=d&gt;&gt;<span class="number">32</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> e=(<span class="type">long</span> <span class="type">long</span>)a_1*(<span class="type">long</span> <span class="type">long</span>)b_1;e=e&gt;&gt;<span class="number">32</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%x\n%x\n%x\n%x\n%x\n%x\n%x\n%x&quot;</span>,a*b,c,d,e,b/a,b_1/a_1,b%a,b_1%a_1);</span><br></pre></td></tr></table></figure>
-<p>正确结果如下。</p>
-<figure>
-<img
-src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020105730117.png"
-alt="image-20231020105730117" />
-<figcaption aria-hidden="true">image-20231020105730117</figcaption>
-</figure>
-<p>开发板验证如下。</p>
-<p><img src="C:\Users\86199\AppData\Local\Packages\Microsoft.YourPhone_8wekyb3d8bbwe\TempState\medias\扫描全能王 2023-10-20 11.00_8.jpg" alt="扫描全能王 2023-10-20 11.00_8" style="zoom:10%;" /><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020110851897.png" alt="image-20231020110851897" style="zoom:10%;" /><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020110910686.png" alt="image-20231020110910686" style="zoom:10%;" /></p>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020110927743.png" alt="image-20231020110927743" style="zoom:10%;" /><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020110939912.png" alt="image-20231020110939912" style="zoom:10%;" /><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020110952874.png" alt="image-20231020110952874" style="zoom:10%;" /></p>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020111010744.png" alt="image-20231020111010744" style="zoom:10%;" /><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020111027457.png" alt="image-20231020111027457" style="zoom:10%;" /><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020111041714.png" alt="image-20231020111041714" style="zoom:10%;" /></p>
-<h3 id="错误现象及分析-3">错误现象及分析</h3>
-<p>rst清空的时候要把寄存器中的东西都清空，否则in_valid和in_error可能并不会清零。</p>
-<p>当有符号数与有符号数相乘时，第32位为符号位，而有符号数与无符号数相乘时，无符号数视为32位的非负数，要考虑可能出现的溢出问题。</p>
-<h2 id="思考题">思考题</h2>
-<ul>
-<li><strong>分析rv32m模块的资源占用和性能特点。</strong></li>
-</ul>
-<blockquote>
-<p><img src="C:\Users\86199\AppData\Roaming\Typora\typora-user-images\image-20231020122357483.png" alt="image-20231020122357483" style="zoom:50%;" /></p>
-<p>乘法效率比除法效率要高。</p>
-</blockquote>
-<ul>
-<li><strong>阐述浮点数的乘除法如何实现？</strong></li>
-</ul>
-<blockquote>
-<p>乘法实现：</p>
-<ol type="1">
-<li>将两个浮点数的阶码相加，得到结果的阶码。</li>
-<li>将两个浮点数的尾数相乘，得到结果的尾数。</li>
-<li>根据尾数相乘的结果，进行规格化和舍入等处理操作，得到最终结果。</li>
-</ol>
-<p>除法实现：</p>
-<ol type="1">
-<li>将被除数的阶码减去除数的阶码，得到结果的阶码。</li>
-<li>将被除数的尾数除以除数的尾数，得到结果的尾数。</li>
-<li>根据尾数相除的结果，进行规格化和舍入等处理操作，得到最终结果。</li>
-</ol>
-</blockquote>
-<ul>
-<li><strong>分析当除数是一个常量时，如何通过乘以常量倒数的方法来得到近似的结果。与除法运算进
-行对比分析，比如常量是3或者7时。 </strong></li>
-</ul>
-<blockquote>
-<p>乘以常量的倒数的方法适用于那些除数为常量且在计算中频繁出现的情况。通过预先计算常量的倒数，并将乘法替换为乘以常量的倒数的运算，可以大大提高运算性能和效率。</p>
-<p>对于常量为3的情况，我们可以选择使用其倒数1/3，即乘以0.3333作为近似的结果。这样，除法运算a/3就可以转化为乘法运算a*0.3333来进行计算。</p>
-<p>对于常量为7的情况，我们可以选择使用其倒数1/7，即乘以0.1429作为近似的结果。这样，除法运算a/7就可以转化为乘法运算a*0.1429来进行计算。</p>
-<p>对于性能方面的比较：</p>
-<ul>
-<li>乘以常量倒数的方法通常比除法运算更快，因为乘法运算的速度一般比除法运算快得多。</li>
-<li>但是乘以常量倒数的方法需要多一次乘法运算和保留的小数位数，可能会导致精度的损失。</li>
-</ul>
-<p>对于精度方面的比较：</p>
-<ul>
-<li>乘以常量倒数的方法是一种近似计算方法，会引入一定的舍入误差。</li>
-<li>除法运算通常可以得到更准确的结果，但需要更多的周期和硬件资源。</li>
-</ul>
-</blockquote>
-<ul>
-<li><strong>通过查找资料，阐述提高乘除法器的运算性能的思路和方法。</strong></li>
-</ul>
-<blockquote>
-<p>要提高乘除法器的运算性能，可以考虑以下思路和方法：</p>
-<ol type="1">
-<li>优化算法：选择更高效的乘除算法可以显著提高运算性能。例如，可以使用快速傅立叶变换（FFT）来加速复数乘法，或者使用Booth算法来进行带符号乘法。</li>
-<li>并行计算：利用乘除法器的并行性质，将计算任务分解为多个子任务，并同时进行计算。通过并行计算可以加速整个运算过程。可以采用数据并行、指令级并行或线程级并行等方式实现并行计算。</li>
-<li>流水线技术：将乘除运算划分为多个阶段，并利用流水线技术使不同阶段的运算可同时进行。这样可以减小乘除操作的延迟，提高吞吐量。流水线技术需要合理划分阶段，解决流水线冲突和相关性问题。</li>
-<li>基于硬件加速：通过在硬件电路中添加专门的计算单元和加速器，优化乘除运算的性能。例如，可以利用乘法累加器（MAC）单元、乘法累积器（MACC）单元、浮点运算单元等来提高运算效率。</li>
-<li>采用预计算和查表方式：对于一些常见的乘除操作或特定的数值范围，可以事先进行预计算或者将结果存入查找表中。在实际运算时，直接查表或者使用预计算结果，避免重复运算，从而加速乘除运算。</li>
-<li>优化电路结构：通过改进电路结构，减小运算单元的延迟和功耗。</li>
-</ol>
-</blockquote>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://expelli-armus.github.io">ECHO</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://expelli-armus.github.io/2023/10/20/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab4%20%E4%B9%98%E9%99%A4%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C/">https://expelli-armus.github.io/2023/10/20/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab4%20%E4%B9%98%E9%99%A4%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://expelli-armus.github.io" target="_blank">ECHO_1103</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/10/25/ICS/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" title="第一章 计算机系统概述"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">第一章 计算机系统概述</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/12/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab3%20%E7%AE%97%E6%9C%AF%E9%80%BB%E8%BE%91%E9%83%A8%E4%BB%B6%E5%AE%9E%E9%AA%8C/" title="Lab3 算术逻辑部件实验"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Lab3 算术逻辑部件实验</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ECHO</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Expelli-armus" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:echo110326390@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%98%E9%99%A4%E6%B3%95%E5%99%A8%E5%AE%9E%E9%AA%8C"><span class="toc-number">1.</span> <span class="toc-text">乘除法器实验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81%E4%B8%80%E4%BD%8D%E4%B9%98%E6%B3%95%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">补码一位乘法器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B4%E4%BD%93%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.1.</span> <span class="toc-text">实验整体方案设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%A8%A1%E5%9D%97"><span class="toc-number">1.1.2.</span> <span class="toc-text">子模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BF%E7%9C%9F%E6%B5%8B%E8%AF%95"><span class="toc-number">1.1.3.</span> <span class="toc-text">仿真测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E7%8E%B0%E8%B1%A1%E5%8F%8A%E5%88%86%E6%9E%90"><span class="toc-number">1.1.4.</span> <span class="toc-text">错误现象及分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E4%B9%98%E6%B3%95%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">快速乘法器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B4%E4%BD%93%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">实验整体方案设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%A8%A1%E5%9D%97-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">子模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BF%E7%9C%9F%E6%B5%8B%E8%AF%95-1"><span class="toc-number">1.2.3.</span> <span class="toc-text">仿真测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E7%8E%B0%E8%B1%A1%E5%8F%8A%E5%88%86%E6%9E%90-1"><span class="toc-number">1.2.4.</span> <span class="toc-text">错误现象及分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81%E9%99%A4%E6%B3%95%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">补码除法器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B4%E4%BD%93%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">实验整体方案设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%A8%A1%E5%9D%97-2"><span class="toc-number">1.3.2.</span> <span class="toc-text">子模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E7%8E%B0%E8%B1%A1%E5%8F%8A%E5%88%86%E6%9E%90-2"><span class="toc-number">1.3.3.</span> <span class="toc-text">错误现象及分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rv32m%E6%8C%87%E4%BB%A4%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.</span> <span class="toc-text">RV32M指令实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B4%E4%BD%93%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1-3"><span class="toc-number">1.4.1.</span> <span class="toc-text">实验整体方案设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E6%A8%A1%E5%9D%97-3"><span class="toc-number">1.4.2.</span> <span class="toc-text">子模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF%E9%AA%8C%E8%AF%81"><span class="toc-number">1.4.3.</span> <span class="toc-text">开发板验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E7%8E%B0%E8%B1%A1%E5%8F%8A%E5%88%86%E6%9E%90-3"><span class="toc-number">1.4.4.</span> <span class="toc-text">错误现象及分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.5.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/22/ICS/PA3%20-%20%E7%A9%BF%E8%B6%8A%E6%97%B6%E7%A9%BA%E7%9A%84%E6%97%85%E7%A8%8B%20%E6%89%B9%E5%A4%84%E7%90%86%E7%B3%BB%E7%BB%9F/" title="PA3">PA3</a><time datetime="2023-12-21T16:08:25.874Z" title="发表于 2023-12-22 00:08:25">2023-12-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/05/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU%E8%AE%BE%E8%AE%A1/" title="lab10 流水线CPU设计">lab10 流水线CPU设计</a><time datetime="2023-12-05T02:39:31.000Z" title="发表于 2023-12-05 10:39:31">2023-12-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/28/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab8%20%20%E5%8D%95%E5%91%A8%E6%9C%9FCPU%E8%AE%BE%E8%AE%A1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" title="Lab8 单周期CPU设计">Lab8 单周期CPU设计</a><time datetime="2023-11-28T06:30:14.237Z" title="发表于 2023-11-28 14:30:14">2023-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/15/%E9%93%BE%E6%8E%A5/" title="无题">无题</a><time datetime="2023-11-15T15:43:00.000Z" title="发表于 2023-11-15 23:43:00">2023-11-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/15/%E6%95%B0%E7%94%B5%E5%AE%9E%E9%AA%8C/Lab7%20%E5%AD%98%E5%82%A8%E5%99%A8%E4%BD%93%E7%B3%BB%E5%AE%9E%E9%AA%8C/" title="Lab7 存储器体系实验">Lab7 存储器体系实验</a><time datetime="2023-11-15T08:27:54.350Z" title="发表于 2023-11-15 16:27:54">2023-11-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By ECHO</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
-  window.MathJax = {
-    tex: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"]],
-      tags: 'ams'
-    },
-    chtml: {
-      scale: 1.1
-    },
-    options: {
-      renderActions: {
-        findScript: [10, doc => {
-          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
-            const display = !!node.type.match(/; *mode=display/)
-            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
-            const text = document.createTextNode('')
-            node.parentNode.replaceChild(text, node)
-            math.start = {node: text, delim: '', n: 0}
-            math.end = {node: text, delim: '', n: 0}
-            doc.math.push(math)
-          }
-        }, ''],
-        insertScript: [200, () => {
-          document.querySelectorAll('mjx-container').forEach(node => {
-            if (node.hasAttribute('display')) {
-              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
-            } else {
-              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
-            }
-          });
-        }, '', false]
-      }
-    }
-  }
-  
-  const script = document.createElement('script')
-  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
-  script.id = 'MathJax-script'
-  script.async = true
-  document.head.appendChild(script)
-} else {
-  MathJax.startup.document.state(0)
-  MathJax.texReset()
-  MathJax.typeset()
-}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
