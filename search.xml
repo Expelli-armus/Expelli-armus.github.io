@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
-    <url>/2023/04/08/IF%20ANYTHING%20HAPENS%20I%20LOVE%20YOU/</url>
-    <content><![CDATA[<hr />
-<h1 id="if-anything-hapens-i-love-you">IF ANYTHING HAPENS I LOVE
-YOU</h1>
-<p>真相，还是交给你自己去看。 谁也无法彻底走进别人的悲痛。
-大多数时候，我们的感动和醒悟，都只是匆忙地掠过别人的一生。 但就是一眼。
-也足以成为，彼此留存一生的信物。</p>
-]]></content>
-      <categories>
-        <category>小记</category>
-      </categories>
-  </entry>
-  <entry>
     <title>00x1位运算</title>
     <url>/2023/08/03/00x1%E4%BD%8D%E8%BF%90%E7%AE%97/</url>
     <content><![CDATA[<h1 id="x1-位运算">00x1 位运算</h1>
@@ -96,6 +82,20 @@ class="math inline">\(O(n^2 *2^n)\)</span>。</p>
 ]]></content>
       <categories>
         <category>算法竞赛进阶指南</category>
+      </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/04/08/IF%20ANYTHING%20HAPENS%20I%20LOVE%20YOU/</url>
+    <content><![CDATA[<hr />
+<h1 id="if-anything-hapens-i-love-you">IF ANYTHING HAPENS I LOVE
+YOU</h1>
+<p>真相，还是交给你自己去看。 谁也无法彻底走进别人的悲痛。
+大多数时候，我们的感动和醒悟，都只是匆忙地掠过别人的一生。 但就是一眼。
+也足以成为，彼此留存一生的信物。</p>
+]]></content>
+      <categories>
+        <category>小记</category>
       </categories>
   </entry>
   <entry>
@@ -262,44 +262,6 @@ href="https://hexo.io/docs/generating.html">Generating</a></p>
 <p>More info: <a
 href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2023/11/15/%E9%93%BE%E6%8E%A5/</url>
-    <content><![CDATA[<hr />
-<h2 id="算法">算法</h2>
-<p><a href="https://zhuanlan.zhihu.com/p/105467597">算法学习笔记（目录）
-- 知乎 (zhihu.com)</a></p>
-<p><a
-href="https://zhuanlan.zhihu.com/p/467270686">旅行商(TSP)问题求解算法合集
-- 知乎 (zhihu.com)</a></p>
-<p><a
-href="https://www.cnblogs.com/SillyTieT/p/11523364.html">最大独立集专题
-- TieT - 博客园 (cnblogs.com)</a></p>
-<p><a
-href="https://blog.csdn.net/YoyoHuzeyou/article/details/131632642?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-131632642-blog-107371731.235%5Ev39%5Epc_relevant_anti_t3&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=3">c++多叉树详解（附基本操作代码版）-CSDN博客</a></p>
-<p><a
-href="https://www.cnblogs.com/victorique/p/8560656.html">最详细（也可能现在不是了）网络流建模基础
-- <sub>victorique</sub> - 博客园 (cnblogs.com)</a></p>
-<p>[<a
-href="https://www.luogu.com.cn/blog/Link-Cut-Treeeee/qian-tan-wang-lao-liu-jian-mu-di-ji-ji-yin-qiao">浅谈网络流的各种建模方法
-- strcmp boom - 洛谷博客 (luogu.com.cn)</a></p>
-<p><a
-href="https://zhuanlan.zhihu.com/p/63595869">算法｜树链剖分瞎入门（这绝对是全网最长的树剖文章）
-- 知乎 (zhihu.com)</a></p>
-<p><a
-href="https://zhuanlan.zhihu.com/p/41082337">【洛谷日报#17】树链剖分详解
-- 知乎 (zhihu.com)</a></p>
-<h2 id="物理">物理</h2>
-<p><a
-href="https://zhuanlan.zhihu.com/p/452443183">大物（下）-电磁学例题笔记
-- 知乎 (zhihu.com)</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/168770929">大学物理复习：电磁学
-- 知乎 (zhihu.com)</a></p>
-]]></content>
-      <categories>
-        <category>链接</category>
-      </categories>
   </entry>
   <entry>
     <title>PA3-穿越时空的旅程——批处理系统</title>
@@ -620,6 +582,44 @@ href="https://box.nju.edu.cn/f/f80e2438c0244ba3a6f5/">PA3演示</a>。</p>
 ]]></content>
       <categories>
         <category>ICS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2023/11/15/%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<hr />
+<h2 id="算法">算法</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/105467597">算法学习笔记（目录）
+- 知乎 (zhihu.com)</a></p>
+<p><a
+href="https://zhuanlan.zhihu.com/p/467270686">旅行商(TSP)问题求解算法合集
+- 知乎 (zhihu.com)</a></p>
+<p><a
+href="https://www.cnblogs.com/SillyTieT/p/11523364.html">最大独立集专题
+- TieT - 博客园 (cnblogs.com)</a></p>
+<p><a
+href="https://blog.csdn.net/YoyoHuzeyou/article/details/131632642?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-131632642-blog-107371731.235%5Ev39%5Epc_relevant_anti_t3&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=3">c++多叉树详解（附基本操作代码版）-CSDN博客</a></p>
+<p><a
+href="https://www.cnblogs.com/victorique/p/8560656.html">最详细（也可能现在不是了）网络流建模基础
+- <sub>victorique</sub> - 博客园 (cnblogs.com)</a></p>
+<p>[<a
+href="https://www.luogu.com.cn/blog/Link-Cut-Treeeee/qian-tan-wang-lao-liu-jian-mu-di-ji-ji-yin-qiao">浅谈网络流的各种建模方法
+- strcmp boom - 洛谷博客 (luogu.com.cn)</a></p>
+<p><a
+href="https://zhuanlan.zhihu.com/p/63595869">算法｜树链剖分瞎入门（这绝对是全网最长的树剖文章）
+- 知乎 (zhihu.com)</a></p>
+<p><a
+href="https://zhuanlan.zhihu.com/p/41082337">【洛谷日报#17】树链剖分详解
+- 知乎 (zhihu.com)</a></p>
+<h2 id="物理">物理</h2>
+<p><a
+href="https://zhuanlan.zhihu.com/p/452443183">大物（下）-电磁学例题笔记
+- 知乎 (zhihu.com)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/168770929">大学物理复习：电磁学
+- 知乎 (zhihu.com)</a></p>
+]]></content>
+      <categories>
+        <category>链接</category>
       </categories>
   </entry>
 </search>
